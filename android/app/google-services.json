@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1082232456431",
+    "project_id": "makaihealth",
+    "storage_bucket": "makaihealth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082232456431:android:f98c0636516add2430071a",
+        "android_client_info": {
+          "package_name": "com.example.makaihealth"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrN1vBoB4z6Cb4rdkMghyLsH50utcOVNE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

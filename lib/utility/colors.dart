@@ -50,6 +50,10 @@ final class AppColor {
   static const Color placeholderColor = Color(0xCC3C3C3B);
   static const Color errorColor = Color(0xFFFE0257);
   static const Color colorHint = Color(0xff9FA2AA);
+  static const Color rediousfillcolot = Color(0xffD9D9D9);
+  static const Color bordercolor = Color(0xffEAEAEA);
+
+
 
   /// ****************
 

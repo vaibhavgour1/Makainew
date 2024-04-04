@@ -57,6 +57,7 @@ dependencies:
   fluttertoast: ^8.2.4
   #dio api calling and exception handling
   dio:
+
   #get
   get: ^4.6.6
   #page indicator
@@ -66,6 +67,19 @@ dependencies:
   socket_io_client: ^2.0.1
   flutter_simple_dependency_injection: ^2.0.0
   uuid: ^3.0.7
+  #otp textfield
+  flutter_otp_text_field: ^1.1.1
+  #image icker
+  image_picker: ^1.0.2
+  #image croper
+  image_cropper: ^5.0.0
+  #chart
+  # d_chart: ^2.6.9
+  pie_chart: ^5.4.0
+  fl_chart: ^0.65.0
+  basic_utils: ^5.7.0
+  #syncfusion_flutter_charts: ^25.1.37
+
 
 
 dev_dependencies:
@@ -87,6 +101,8 @@ dev_dependencies:
   freezed: ^2.4.6
   json_serializable: ^6.7.1
   very_good_analysis: ^5.1.0
+  file_picker: ^8.0.0+1
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -103,6 +119,7 @@ flutter:
     - assets/images/svgs/
     - assets/json/
     - assets/gif/
+    - assets/images/png/
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

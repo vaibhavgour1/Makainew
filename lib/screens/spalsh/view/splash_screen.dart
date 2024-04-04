@@ -36,53 +36,53 @@ class _SplashScreenState extends State<SplashScreen> {
     //https://endpoint-trial.cognigy.ai/bafebec090f608f17d1a8878cae34bf5d09099df639919002ee75de038c64f57
     super.initState();
     log('Connected--->S');
-    // IO.Socket socket =
-    //     IO.io('https://endpoint-trial.cognigy.ai/', <String, dynamic>{
-    //   'transports': ['websocket'],
-    //   //   'autoConnect': false,
-    //   'extraHeaders': {
-    //     'URLToken':
-    //         'bafebec090f608f17d1a8878cae34bf5d09099df639919002ee75de038c64f57'
-    //   }
-    // });
-    // socket.connect();
-    //
-    // // Subscribe to events
-    // socket.onConnect((_) {
-    //   log('Connected socket==>$userId');
-    //   log('Connected socket==>$sessionId');
-    //   socket.emit('processInput', {
-    //     'URLToken':
-    //         'bafebec090f608f17d1a8878cae34bf5d09099df639919002ee75de038c64f57',
-    //     'text': "vaibhav",
-    //     'userId': userId,
-    //     'sessionId': sessionId,
-    //     'channel': 'flutter',
-    //     'source': 'device',
-    //     "data": {
-    //       'user_profile': 'AppString.userMobile)',
-    //       'email': 'vgour307@gmail.com',
-    //       'name': 'vaibhav',
-    //       'base': 'mp4',
-    //       'url': '',
-    //       'slug': 'slug',
-    //       'patientId': userId,
-    //       'patientConditionId': 'patientConditionId',
-    //     },
-    //   });
-    //   log('Connected socket');
-    // });
-    //
-    // log("${socket.id}");
-    // socket.onDisconnect((_) => log('Disconnected'));
-    // socket.on('connect', (data) {
-    //   log('Message: $data');
-    // });
-    // socket.on('output', (response) {
-    //   log('output response : ${response.toString()}');
-    // });
+    IO.Socket socket =
+        IO.io('https://endpoint-trial.cognigy.ai/', <String, dynamic>{
+      'transports': ['websocket'],
+      //   'autoConnect': false,
+      'extraHeaders': {
+        'URLToken':
+            'bafebec090f608f17d1a8878cae34bf5d09099df639919002ee75de038c64f57'
+      }
+    });
+    socket.connect();
+
+    // Subscribe to events
+    socket.onConnect((_) {
+      log('Connected socket==>$userId');
+      log('Connected socket==>$sessionId');
+      socket.emit('processInput', {
+        'URLToken':
+            'bafebec090f608f17d1a8878cae34bf5d09099df639919002ee75de038c64f57',
+        'text': "vaibhav",
+        'userId': userId,
+        'sessionId': sessionId,
+        'channel': 'flutter',
+        'source': 'device',
+        "data": {
+          'user_profile': 'AppString.userMobile)',
+          'email': 'vgour307@gmail.com',
+          'name': 'vaibhav',
+          'base': 'mp4',
+          'url': '',
+          'slug': 'slug',
+          'patientId': userId,
+          'patientConditionId': 'patientConditionId',
+        },
+      });
+      log('Connected socket');
+    });
+
+    log("${socket.id}");
+    socket.onDisconnect((_) => log('Disconnected'));
+    socket.on('connect', (data) {
+      log('Message: $data');
+    });
+    socket.on('output', (response) {
+      log('output response : ${response.toString()}');
+    });
     // SocketService().connect();
-    //SocketService().sendMessage("text", "data");
+    // SocketService().sendMessage("text", "data");
 
     Timer(
       const Duration(seconds: 3),
