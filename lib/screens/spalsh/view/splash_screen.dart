@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:go_router/go_router.dart';
 import 'package:makaihealth/gen/assets.gen.dart';
@@ -10,7 +9,6 @@ import 'package:makaihealth/utility/colors.dart';
 import 'package:makaihealth/utility/dimension.dart';
 import 'package:makaihealth/utility/socket.io.dart';
 import 'package:makaihealth/utility/text_styles.dart';
-import 'package:makaihealth/widget/space_vertical.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:uuid/uuid.dart';
 
@@ -99,7 +97,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void dispose() {
-    socket.dispose();
+    //socket.dispose();
     super.dispose();
   }
 

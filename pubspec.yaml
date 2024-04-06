@@ -78,7 +78,9 @@ dependencies:
   pie_chart: ^5.4.0
   fl_chart: ^0.65.0
   basic_utils: ^5.7.0
-  #syncfusion_flutter_charts: ^25.1.37
+  firebase_core:
+  firebase_auth:
+#syncfusion_flutter_charts: ^25.1.37
 
 
 

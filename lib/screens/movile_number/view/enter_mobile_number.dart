@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:makaihealth/utility/colors.dart';
 import 'package:makaihealth/utility/dimension.dart';
+import 'package:makaihealth/utility/logger.dart';
 import 'package:makaihealth/utility/string_constants.dart';
 import 'package:makaihealth/utility/text_styles.dart';
 import 'package:makaihealth/widget/app_button.dart';
@@ -15,6 +17,15 @@ class EnterMobileNUmber extends StatefulWidget {
 }
 
 class _EnterMobileNUmberState extends State<EnterMobileNUmber> {
+  String _phoneNumber = "";
+  TextEditingController countryController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    countryController.text = "+91";
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,16 +72,13 @@ class _EnterMobileNUmberState extends State<EnterMobileNUmber> {
                     child: IntlPhoneField(
                       flagsButtonPadding: const EdgeInsets.only(left: 8),
                       dropdownIconPosition: IconPosition.trailing,
-
                       decoration: InputDecoration(
                           labelStyle: const TextStyle(color: Colors.blue),
                           suffixStyle: const TextStyle(color: Colors.blue),
-                          floatingLabelStyle: const TextStyle(color: Colors.blue),
-                          helperStyle:  const TextStyle(color: Colors.blue),
-                          prefixStyle:  const TextStyle(color: Colors.blue),
-
-
-
+                          floatingLabelStyle:
+                              const TextStyle(color: Colors.blue),
+                          helperStyle: const TextStyle(color: Colors.blue),
+                          prefixStyle: const TextStyle(color: Colors.blue),
                           hintText: enterMobileNumber,
                           hintStyle: textRegular.copyWith(
                               color: AppColor.textHintColor,
@@ -88,8 +96,47 @@ class _EnterMobileNUmberState extends State<EnterMobileNUmber> {
                           color: AppColor.textHintColor,
                           fontSize: AppSize.sp14),
                       onChanged: (phone) {
-                        print(phone.completeNumber);
+                        (phone.completeNumber).logD;
                       },
+                    ),
+                  ),
+                  Container(
+                    height: 55,
+                    decoration: BoxDecoration(
+                        border: Border.all(width: 1, color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        SizedBox(
+                          width: 40,
+                          child: TextField(
+                            controller: countryController,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          "|",
+                          style: TextStyle(fontSize: 33, color: Colors.grey),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: TextField(
+                              keyboardType: TextInputType.phone,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Phone",
+                              ),
+                            ))
+                      ],
                     ),
                   ),
                   SpaceV(AppSize.h40),
@@ -113,7 +160,9 @@ class _EnterMobileNUmberState extends State<EnterMobileNUmber> {
                   ),
                   AppButton(
                     continueButton,
-                    () {},
+                    () {
+                      context.go('/VerifyOtpScreen');
+                    },
                     isDisabled: false,
                   ),
                   Text(

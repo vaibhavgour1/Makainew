@@ -1,15 +1,26 @@
+import 'dart:io';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:makaihealth/extensions/constants.dart';
-import 'package:makaihealth/utility/socket.io.dart';
 import 'package:makaihealth/utility/theme.dart';
 
 import 'routes/app_router.dart';
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Platform.isAndroid
+      ? await Firebase.initializeApp(
+          options: const FirebaseOptions(
+              apiKey: 'AIzaSyDrN1vBoB4z6Cb4rdkMghyLsH50utcOVNE',
+              appId: '1:1082232456431:android:f98c0636516add2430071a',
+              messagingSenderId: '1082232456431',
+              projectId: 'makaihealth'))
+      : await Firebase.initializeApp();
 
-void main() {
-
+// Ideal time to initialize
+  //await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
   runApp(const MyApp());
 }
 

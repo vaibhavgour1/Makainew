@@ -1,11 +1,10 @@
-
 import 'package:go_router/go_router.dart';
 import 'package:makaihealth/screens/Patient_Info/view/patientinfo_form_screen.dart';
 import 'package:makaihealth/screens/assessment/view/assessment_screen.dart';
 import 'package:makaihealth/screens/doctor_info/view/doctor_info_screen.dart';
-// import 'package:makaihealth/screens/login_signup/view/Verifyotp_screen.dart';
+import 'package:makaihealth/screens/login_signup/view/Verifyotp_screen.dart';
 import 'package:makaihealth/screens/login_signup/view/login_signup_screen.dart';
-// import 'package:makaihealth/screens/login_signup/view/loginwith_email_screen.dart';
+import 'package:makaihealth/screens/login_signup/view/loginwith_email_screen.dart';
 import 'package:makaihealth/screens/medical_condition/view/medical_condition_screen.dart';
 import 'package:makaihealth/screens/medication_screen/view/medication_screen.dart';
 import 'package:makaihealth/screens/movile_number/view/enter_mobile_number.dart';
@@ -22,103 +21,106 @@ final GoRouter router = GoRouter(
   initialLocation: '/',
   routes: [
     GoRoute(
-      name: 'SplashScreen', // Optional, add name to your routes. Allows you navigate by name instead of path
+      name: 'SplashScreen',
+      // Optional, add name to your routes. Allows you navigate by name instead of path
       path: '/',
       builder: (context, state) => const SplashScreen(),
     ),
     GoRoute(
-      name: 'OnboardingPage', // Optional, add name to your routes. Allows you navigate by name instead of path
+      name: 'OnboardingPage',
+      // Optional, add name to your routes. Allows you navigate by name instead of path
       path: '/OnboardingPage',
-      builder: (context, state) =>   OnboardingScreen(),
+      builder: (context, state) => OnboardingScreen(),
     ),
     GoRoute(
-      name: 'LoginSignupScreen', // Optional, add name to your routes. Allows you navigate by name instead of path
+      name: 'LoginSignupScreen',
+      // Optional, add name to your routes. Allows you navigate by name instead of path
       path: '/LoginSignupScreen',
       builder: (context, state) => const LoginSignupScreen(),
     ),
     GoRoute(
-      name: 'EnterMobileNUmber', // Optional, add name to your routes. Allows you navigate by name instead of path
+      name: 'EnterMobileNUmber',
+      // Optional, add name to your routes. Allows you navigate by name instead of path
       path: '/EnterMobileNUmber',
       builder: (context, state) => const EnterMobileNUmber(),
     ),
-    // GoRoute(
-    //   name: 'VerifyOtpScreen', // Optional, add name to your routes. Allows you navigate by name instead of path
-    //   path: '/VerifyOtpScreen',
-    //   builder: (context, state) => const VerifyOtpScreen(),
-    // ),
-    //
-    // GoRoute(
-    //   name: 'LoginwithEmailScreen', // Optional, add name to your routes. Allows you navigate by name instead of path
-    //   path: '/LoginwithEmailScreen',
-    //   builder: (context, state) => const LoginwithEmailScreen(),
-    // ),
-
     GoRoute(
-      name: 'PatientInfoFormScreen', // Optional, add name to your routes. Allows you navigate by name instead of path
+      name: 'VerifyOtpScreen',
+      // Optional, add name to your routes. Allows you navigate by name instead of path
+      path: '/VerifyOtpScreen',
+      builder: (context, state) => const VerifyOtpScreen(),
+    ),
+    GoRoute(
+      name: 'LoginwithEmailScreen',
+      // Optional, add name to your routes. Allows you navigate by name instead of path
+      path: '/LoginwithEmailScreen',
+      builder: (context, state) => const LoginwithEmailScreen(),
+    ),
+    GoRoute(
+      name: 'PatientInfoFormScreen',
+      // Optional, add name to your routes. Allows you navigate by name instead of path
       path: '/PatientInfoFormScreen',
       builder: (context, state) => const PatientInfoFormScreen(),
     ),
-
     GoRoute(
-      name: 'PatientProfileScreen', // Optional, add name to your routes. Allows you navigate by name instead of path
+      name: 'PatientProfileScreen',
+      // Optional, add name to your routes. Allows you navigate by name instead of path
       path: '/PatientProfileScreen',
       builder: (context, state) => const PatientProfileScreen(),
     ),
-
     GoRoute(
-      name: 'EditProfileScreen', // Optional, add name to your routes. Allows you navigate by name instead of path
+      name: 'EditProfileScreen',
+      // Optional, add name to your routes. Allows you navigate by name instead of path
       path: '/EditProfileScreen',
       builder: (context, state) => const EditProfileScreen(),
     ),
-
     GoRoute(
-      name: 'MedicalConditionScreen', // Optional, add name to your routes. Allows you navigate by name instead of path
+      name: 'MedicalConditionScreen',
+      // Optional, add name to your routes. Allows you navigate by name instead of path
       path: '/MedicalConditionScreen',
       builder: (context, state) => const MedicalConditionScreen(),
     ),
-
     GoRoute(
-      name: 'DoctorInfoScreen', // Optional, add name to your routes. Allows you navigate by name instead of path
+      name: 'DoctorInfoScreen',
+      // Optional, add name to your routes. Allows you navigate by name instead of path
       path: '/DoctorInfoScreen',
       builder: (context, state) => const DoctorInfoScreen(),
     ),
-
     GoRoute(
-      name: 'UserProfileHomeScreen', // Optional, add name to your routes. Allows you navigate by name instead of path
+      name: 'UserProfileHomeScreen',
+      // Optional, add name to your routes. Allows you navigate by name instead of path
       path: '/UserProfileHomeScreen',
       builder: (context, state) => const UserProfileHomeScreen(),
     ),
-
     GoRoute(
-      name: 'MedicationScreen', // Optional, add name to your routes. Allows you navigate by name instead of path
+      name: 'MedicationScreen',
+      // Optional, add name to your routes. Allows you navigate by name instead of path
       path: '/MedicationScreen',
       builder: (context, state) => const MedicationScreen(),
     ),
-
     GoRoute(
-      name: 'AssessmentScreen', // Optional, add name to your routes. Allows you navigate by name instead of path
+      name: 'AssessmentScreen',
+      // Optional, add name to your routes. Allows you navigate by name instead of path
       path: '/AssessmentScreen',
       builder: (context, state) => const AssessmentScreen(),
     ),
-
     GoRoute(
-      name: 'ReportsScreen', // Optional, add name to your routes. Allows you navigate by name instead of path
+      name: 'ReportsScreen',
+      // Optional, add name to your routes. Allows you navigate by name instead of path
       path: '/ReportsScreen',
       builder: (context, state) => const ReportsScreen(),
     ),
-
     GoRoute(
-      name: 'NotificationScreen', // Optional, add name to your routes. Allows you navigate by name instead of path
+      name: 'NotificationScreen',
+      // Optional, add name to your routes. Allows you navigate by name instead of path
       path: '/NotificationScreen',
       builder: (context, state) => const NotificationScreen(),
     ),
     GoRoute(
-      name: 'SummeryScreen', // Optional, add name to your routes. Allows you navigate by name instead of path
+      name: 'SummeryScreen',
+      // Optional, add name to your routes. Allows you navigate by name instead of path
       path: '/SummeryScreen',
       builder: (context, state) => const SummeryScreen(),
     ),
-
-
-
   ],
 );
