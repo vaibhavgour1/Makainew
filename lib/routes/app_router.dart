@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:makaihealth/screens/Patient_Info/view/patientinfo_form_screen.dart';
 import 'package:makaihealth/screens/assessment/view/assessment_screen.dart';
 import 'package:makaihealth/screens/doctor_info/view/doctor_info_screen.dart';
+import 'package:makaihealth/screens/home/views/home_view.dart';
 import 'package:makaihealth/screens/login_signup/view/Verifyotp_screen.dart';
 import 'package:makaihealth/screens/login_signup/view/login_signup_screen.dart';
 import 'package:makaihealth/screens/login_signup/view/loginwith_email_screen.dart';
@@ -48,7 +49,13 @@ final GoRouter router = GoRouter(
       name: 'VerifyOtpScreen',
       // Optional, add name to your routes. Allows you navigate by name instead of path
       path: '/VerifyOtpScreen',
-      builder: (context, state) => const VerifyOtpScreen(),
+      builder: (context, state) =>  const VerifyOtpScreen(verify: '', mobile: '',),
+    ),
+    GoRoute(
+      name: 'HomeView',
+      // Optional, add name to your routes. Allows you navigate by name instead of path
+      path: '/HomeView',
+      builder: (context, state) =>  HomeView(),
     ),
     GoRoute(
       name: 'LoginwithEmailScreen',

@@ -63,7 +63,10 @@ final class AppColor {
   static const Color chatRedBgColor = Color(0xFFFFE0E0);
   static const Color chatBlueBgColor = Color(0xFFB9C2FB);
 
-
+  static const Color white = Colors.white;
+  static const Color backGroundColor = Color(0XFFF2F2F2);
+  static const Color darkBlue = Color(0XFF0E59C4);
+  static const Color grey = Colors.grey;
   // static const Gradient gradientRedPink = LinearGradient(
   //   begin: Alignment.topCenter,
   //   end: Alignment.bottomCenter,

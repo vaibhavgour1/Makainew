@@ -1,11 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:makaihealth/screens/login_signup/view/Verifyotp_screen.dart';
 import 'package:makaihealth/utility/colors.dart';
 import 'package:makaihealth/utility/dimension.dart';
 import 'package:makaihealth/utility/logger.dart';
 import 'package:makaihealth/utility/string_constants.dart';
 import 'package:makaihealth/utility/text_styles.dart';
+import 'package:makaihealth/utility/utility.dart';
 import 'package:makaihealth/widget/app_button.dart';
 import 'package:makaihealth/widget/space_vertical.dart';
 
@@ -17,8 +20,9 @@ class EnterMobileNUmber extends StatefulWidget {
 }
 
 class _EnterMobileNUmberState extends State<EnterMobileNUmber> {
-  String _phoneNumber = "";
+  String phoneNumber = "";
   TextEditingController countryController = TextEditingController();
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   void initState() {
@@ -26,6 +30,7 @@ class _EnterMobileNUmberState extends State<EnterMobileNUmber> {
     countryController.text = "+91";
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,49 +62,49 @@ class _EnterMobileNUmberState extends State<EnterMobileNUmber> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   SpaceV(AppSize.h40),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(AppSize.r16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 1,
-                          blurRadius: 1,
-                          offset: const Offset(0, 1),
-                        ),
-                      ],
-                    ),
-                    child: IntlPhoneField(
-                      flagsButtonPadding: const EdgeInsets.only(left: 8),
-                      dropdownIconPosition: IconPosition.trailing,
-                      decoration: InputDecoration(
-                          labelStyle: const TextStyle(color: Colors.blue),
-                          suffixStyle: const TextStyle(color: Colors.blue),
-                          floatingLabelStyle:
-                              const TextStyle(color: Colors.blue),
-                          helperStyle: const TextStyle(color: Colors.blue),
-                          prefixStyle: const TextStyle(color: Colors.blue),
-                          hintText: enterMobileNumber,
-                          hintStyle: textRegular.copyWith(
-                              color: AppColor.textHintColor,
-                              fontSize: AppSize.sp14),
-                          filled: true,
-                          fillColor: Colors.grey.shade100,
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius:
-                                BorderRadius.circular(AppSize.rTextField),
-                          ),
-                          counterText: ''),
-                      initialCountryCode: 'IN',
-                      style: textRegular.copyWith(
-                          color: AppColor.textHintColor,
-                          fontSize: AppSize.sp14),
-                      onChanged: (phone) {
-                        (phone.completeNumber).logD;
-                      },
-                    ),
-                  ),
+                  // Container(
+                  //   decoration: BoxDecoration(
+                  //     borderRadius: BorderRadius.circular(AppSize.r16),
+                  //     boxShadow: [
+                  //       BoxShadow(
+                  //         color: Colors.grey.withOpacity(0.5),
+                  //         spreadRadius: 1,
+                  //         blurRadius: 1,
+                  //         offset: const Offset(0, 1),
+                  //       ),
+                  //     ],
+                  //   ),
+                  //   child: IntlPhoneField(
+                  //     flagsButtonPadding: const EdgeInsets.only(left: 8),
+                  //     dropdownIconPosition: IconPosition.trailing,
+                  //     decoration: InputDecoration(
+                  //         labelStyle: const TextStyle(color: Colors.blue),
+                  //         suffixStyle: const TextStyle(color: Colors.blue),
+                  //         floatingLabelStyle:
+                  //             const TextStyle(color: Colors.blue),
+                  //         helperStyle: const TextStyle(color: Colors.blue),
+                  //         prefixStyle: const TextStyle(color: Colors.blue),
+                  //         hintText: enterMobileNumber,
+                  //         hintStyle: textRegular.copyWith(
+                  //             color: AppColor.textHintColor,
+                  //             fontSize: AppSize.sp14),
+                  //         filled: true,
+                  //         fillColor: Colors.grey.shade100,
+                  //         border: OutlineInputBorder(
+                  //           borderSide: BorderSide.none,
+                  //           borderRadius:
+                  //               BorderRadius.circular(AppSize.rTextField),
+                  //         ),
+                  //         counterText: ''),
+                  //     initialCountryCode: 'IN',
+                  //     style: textRegular.copyWith(
+                  //         color: AppColor.textHintColor,
+                  //         fontSize: AppSize.sp14),
+                  //     onChanged: (phone) {
+                  //       (phone.completeNumber).logD;
+                  //     },
+                  //   ),
+                  // ),
                   Container(
                     height: 55,
                     decoration: BoxDecoration(
@@ -108,7 +113,7 @@ class _EnterMobileNUmberState extends State<EnterMobileNUmber> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         SizedBox(
@@ -116,26 +121,29 @@ class _EnterMobileNUmberState extends State<EnterMobileNUmber> {
                           child: TextField(
                             controller: countryController,
                             keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               border: InputBorder.none,
                             ),
                           ),
                         ),
-                        Text(
+                        const Text(
                           "|",
                           style: TextStyle(fontSize: 33, color: Colors.grey),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Expanded(
                             child: TextField(
-                              keyboardType: TextInputType.phone,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "Phone",
-                              ),
-                            ))
+                          onChanged: (value) {
+                            phoneNumber = value;
+                          },
+                          keyboardType: TextInputType.phone,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Phone",
+                          ),
+                        ))
                       ],
                     ),
                   ),
@@ -160,8 +168,38 @@ class _EnterMobileNUmberState extends State<EnterMobileNUmber> {
                   ),
                   AppButton(
                     continueButton,
-                    () {
-                      context.go('/VerifyOtpScreen');
+                    () async {
+                      await FirebaseAuth.instance.verifyPhoneNumber(
+                        phoneNumber: countryController.text + phoneNumber,
+                        verificationCompleted:
+                            (PhoneAuthCredential credential) async {
+                          // ANDROID ONLY!
+
+                          // Sign the user in (or link) with the auto-generated credential
+                          // await auth.signInWithCredential(credential);
+                        },
+                        verificationFailed: (FirebaseAuthException e) {
+                          if (e.code == 'invalid-phone-number') {
+                            Utility.showToast(
+                                msg: 'The provided phone number is not valid.');
+                          }
+
+                          // Handle other errors
+                        },
+                        codeSent: (String verificationId, int? resendToken) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => VerifyOtpScreen(
+                                        verify: verificationId,
+                                        mobile: phoneNumber,
+                                      )));
+                          // context.goNamed(
+                          //   'VerifyOtpScreen?verify=$verificationId',
+                          // );
+                        },
+                        codeAutoRetrievalTimeout: (String verificationId) {},
+                      );
                     },
                     isDisabled: false,
                   ),

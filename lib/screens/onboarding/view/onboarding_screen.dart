@@ -15,7 +15,7 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _controller = PageController();
-  double currentPage = 0;
+  int currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               controller: _controller,
               onPageChanged: (int page) {
                 setState(() {
-                  currentPage = page.toDouble();
+                  currentPage = page;
                 });
               },
               children: const [

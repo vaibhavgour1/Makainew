@@ -3,11 +3,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:makaihealth/utility/colors.dart';
 import 'package:makaihealth/utility/dimension.dart';
+import 'package:makaihealth/utility/string_constants.dart';
 import 'package:makaihealth/utility/text_styles.dart';
+import 'package:makaihealth/widget/space_horizontal.dart';
 import 'package:makaihealth/widget/space_vertical.dart';
 
 class AssessmentScreen extends StatefulWidget {
-  const AssessmentScreen({Key? key}) : super(key: key);
+  const AssessmentScreen({super.key});
 
   @override
   State<AssessmentScreen> createState() => _AssessmentScreenState();
@@ -66,7 +68,7 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                                 width:
                                     AppSize.w8), // Adjust the width as needed
                             Text(
-                              'Assessment',
+                              assessments,
                               style: textSemiBold.copyWith(
                                 color: AppColor.black,
                                 fontSize: AppSize.sp18,
@@ -84,7 +86,7 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Text(
-                    'This week',
+                    thisWeek,
                     style: textSemiBold.copyWith(
                       color: AppColor.black,
                       fontSize: AppSize.sp16,
@@ -100,7 +102,7 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'This Week’s Stats',
+                        thisWeeksStats,
                         style: textBold.copyWith(
                           color: AppColor.black,
                           fontSize: AppSize.sp12,
@@ -109,7 +111,7 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        'Show All',
+                        showAll,
                         style: textBold.copyWith(
                           color: AppColor.textBlueColor,
                           fontSize: AppSize.sp12,
@@ -125,7 +127,7 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Text(
-                    'last months',
+                    lastMonths,
                     style: textSemiBold.copyWith(
                       color: AppColor.black,
                       fontSize: AppSize.sp16,
@@ -134,6 +136,9 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
+                 SpaceV(AppSize.h20),
+                 
+                
               ],
             ),
           ),
@@ -156,14 +161,13 @@ class BarChartWidget extends StatelessWidget {
         data.reduce((value, element) => value > element ? value : element);
 
     return Container(
-      height: 200,
+      height: AppSize.h200,
       padding: EdgeInsets.all(8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: List.generate(data.length, (index) {
-          // Calculate the height of each bar based on its value relative to the maximum value
           double barHeight =
-              (data[index] / maxValue) * 150; // Adjust for bar height
+              (data[index] / maxValue) * AppSize.h140; // Adjust for bar height
           return Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -172,30 +176,21 @@ class BarChartWidget extends StatelessWidget {
                   Container(
                     width: AppSize.w16,
                     height: barHeight,
-                    // decoration: BoxDecoration(
-                    //   borderRadius: BorderRadius.only(
-                    //     topLeft: Radius.circular(10),
-                    //     topRight: Radius.circular(10),
-                    //     bottomLeft: Radius.circular(10),
-                    //     bottomRight: Radius.circular(10)
-                    //   )
-                    // ),
-                    color: Colors.blue,
+                    
+                    color: AppColor.textBlueColor,
                   ),
-                  SizedBox(
-                    width: AppSize.w10,
-                  ),
+                 SpaceH(AppSize.w10),
                   Container(
                     width: AppSize.w16,
                     height: barHeight,
-                    color: Colors.blue,
+                    color: AppColor.textBlueColor,
                   ),
                 ],
               ),
-              SizedBox(height: 5),
+              SpaceV(AppSize.h5),
               Text(
                 labels[index],
-                style: TextStyle(color: Colors.blue),
+                style: TextStyle(color: AppColor.textBlueColor),
               ),
             ],
           );
@@ -204,3 +199,17 @@ class BarChartWidget extends StatelessWidget {
     );
   }
 }
+
+
+class mychart extends StatelessWidget {
+  const mychart({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+
+
+
+

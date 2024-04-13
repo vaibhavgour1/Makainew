@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 class PatientInfoController extends GetxController {
   var isLoading = false.obs;
 
-  TextEditingController namecontroller = TextEditingController();
-    TextEditingController genderController = TextEditingController();
-      TextEditingController birthdateController = TextEditingController();
-        TextEditingController weightController = TextEditingController();
-          TextEditingController heightController = TextEditingController();
+  final nameController = TextEditingController().obs;
+  final genderController = TextEditingController().obs;
+  final birthdateController = TextEditingController().obs;
+  final weightController = TextEditingController().obs;
+  final heightController = TextEditingController().obs;
 
 
 

@@ -1,12 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:makaihealth/extensions/extensions.dart';
 import 'package:makaihealth/screens/Patient_Info/controller/patient_info_controller.dart';
 import 'package:makaihealth/utility/colors.dart';
 import 'package:makaihealth/utility/dimension.dart';
+import 'package:makaihealth/utility/logger.dart';
+import 'package:makaihealth/utility/sharedpref.dart';
 import 'package:makaihealth/utility/string_constants.dart';
 import 'package:makaihealth/utility/text_styles.dart';
 import 'package:makaihealth/widget/app_button.dart';
@@ -24,10 +26,23 @@ class _PatientInfoFormScreenState extends State<PatientInfoFormScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   DateTime? selectedDate;
   String hintText = 'Birth Date';
-
-  PatientInfoController _patientInfoController =
+  Map<String, String> profileData = {};
+  final PatientInfoController _patientInfoController =
       Get.put(PatientInfoController());
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkProfile();
+  }
+  checkProfile() async {
+    retrieveData(await SharedPref.getStringPreference(SharedPref.MOBILE)).then((value){
 
+    value.logD;if(value!=null){
+      context.go('/HomeView');
+    }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -54,7 +69,8 @@ class _PatientInfoFormScreenState extends State<PatientInfoFormScreen> {
                             },
                             child: SvgPicture.asset(
                               "assets/images/svgs/backArrow.svg",
-                              color: AppColor.black,
+
+                              colorFilter: const ColorFilter.mode(AppColor.black, BlendMode.srcIn),
                             ),
                           ),
                           SizedBox(
@@ -75,10 +91,10 @@ class _PatientInfoFormScreenState extends State<PatientInfoFormScreen> {
                       AppFormTextField(
                         label: 'Name',
                         hint: 'Name',
-                        controller: _patientInfoController.namecontroller,
+                        controller: _patientInfoController.nameController.value,
                         validators: (value) {
                           if (_patientInfoController
-                              .namecontroller.text.isEmpty) {
+                              .nameController.value.text.isEmpty) {
                             return 'Enter Name';
                           }
                           return null; // Return null if validation passes
@@ -95,17 +111,17 @@ class _PatientInfoFormScreenState extends State<PatientInfoFormScreen> {
                         children: [
                           Expanded(
                             child: Padding(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                   right:
                                       8.0), // Adjust spacing between fields as needed
                               child: AppFormTextField(
                                 label: 'Gender',
                                 hint: 'Gender',
                                 controller:
-                                    _patientInfoController.genderController,
+                                    _patientInfoController.genderController.value,
                                 validators: (value) {
                                   if (_patientInfoController
-                                      .genderController.text.isEmpty) {
+                                      .genderController.value.text.isEmpty) {
                                     return 'Enter Your Gender';
                                   }
                                   return null; // Return null if validation passes
@@ -121,20 +137,20 @@ class _PatientInfoFormScreenState extends State<PatientInfoFormScreen> {
                           ),
                           Expanded(
                             child: Padding(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                   left:
                                       8.0), // Adjust spacing between fields as needed
                               child: AppFormTextField(
                                 label: 'Birth Date',
                                 hint: hintText,
                                 controller:
-                                    _patientInfoController.birthdateController,
+                                    _patientInfoController.birthdateController.value,
                                 onTap: () async {
                                   selectedDate = await datePicker(context);
                                   if (selectedDate != null) {
                                     String date = DateFormat('dd-MM-yyyy')
                                         .format(selectedDate!);
-                                    _patientInfoController.birthdateController.text =
+                                    _patientInfoController.birthdateController.value.text =
                                         date;
                                     setState(() {
                                       hintText =
@@ -144,7 +160,7 @@ class _PatientInfoFormScreenState extends State<PatientInfoFormScreen> {
                                 },
                                 validators: (value) {
                                   if (_patientInfoController
-                                      .birthdateController.text.isEmpty) {
+                                      .birthdateController.value.text.isEmpty) {
                                     return 'Enter your Birthdate';
                                   }
                                   return null; // Return null if validation passes
@@ -166,17 +182,17 @@ class _PatientInfoFormScreenState extends State<PatientInfoFormScreen> {
                         children: [
                           Expanded(
                             child: Padding(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                   right:
                                       8.0), // Adjust spacing between fields as needed
                               child: AppFormTextField(
                                 label: 'Weight',
                                 hint: 'Weight',
                                 controller:
-                                    _patientInfoController.weightController,
+                                    _patientInfoController.weightController.value,
                                 validators: (value) {
                                   if (_patientInfoController
-                                      .weightController.text.isEmpty) {
+                                      .weightController.value.text.isEmpty) {
                                     return 'Enter weight';
                                   }
                                   return null; // Return null if validation passes
@@ -192,15 +208,15 @@ class _PatientInfoFormScreenState extends State<PatientInfoFormScreen> {
                           ),
                           Expanded(
                             child: Padding(
-                              padding: EdgeInsets.only(left: 8.0),
+                              padding: const EdgeInsets.only(left: 8.0),
                               child: AppFormTextField(
                                 label: 'Height',
                                 hint: 'Height',
                                 controller:
-                                    _patientInfoController.heightController,
+                                    _patientInfoController.heightController.value,
                                 validators: (value) {
                                   if (_patientInfoController
-                                      .heightController.text.isEmpty) {
+                                      .heightController.value.text.isEmpty) {
                                     return 'Enter height';
                                   }
                                   return null; // Return null if validation passes
@@ -233,6 +249,7 @@ class _PatientInfoFormScreenState extends State<PatientInfoFormScreen> {
             submitButton,
             () {
               if (_formKey.currentState!.validate()) {
+
                 _showMyDialog(context);
               }
 
@@ -245,9 +262,6 @@ class _PatientInfoFormScreenState extends State<PatientInfoFormScreen> {
     );
   }
 
-  void updateSelectedOptions() {
-    // Add more options as needed
-  }
 
   Row buildCheckboxRow(
       String label, bool value, ValueChanged<bool?> onChanged) {
@@ -283,7 +297,7 @@ class _PatientInfoFormScreenState extends State<PatientInfoFormScreen> {
                   color: Colors.white.withOpacity(0.3),
                   spreadRadius: 3,
                   blurRadius: 7,
-                  offset: Offset(0, 1), // changes position of shadow
+                  offset: const Offset(0, 1), // changes position of shadow
                 ),
               ],
             ),
@@ -291,7 +305,7 @@ class _PatientInfoFormScreenState extends State<PatientInfoFormScreen> {
               backgroundColor: Colors.transparent,
               contentPadding: EdgeInsets.zero,
               content: Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
@@ -308,7 +322,7 @@ class _PatientInfoFormScreenState extends State<PatientInfoFormScreen> {
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(height: AppSize.h20),
-                      Text(
+                      const Text(
                         "Your Agreement by using this app, you to besound cy, and to comtpry hith, Terms and Conditions. \n   If you do not to these ferms and conditions Your Agreement by using this app, you to besound cy, and to comtpry hith, Terms and Conditions. If you do not  to these ferms and conditions. \n Your Agreement by using this app, you agree to besound cy, and to comtpry hith, theseTerms and Conditions. If you do not",
                         style: TextStyle(
                           color: AppColor.black,
@@ -321,10 +335,28 @@ class _PatientInfoFormScreenState extends State<PatientInfoFormScreen> {
                       ),
                       AppButton(
                         iAccept,
-                        () {
+                        () async {
                           //Navigator.of(context).pop();
+                          // CollectionReference collRef = FirebaseFirestore.instance.collection('userprofile');
+                          // collRef.add({
+                          //   'name': _patientInfoController.nameController.value.text,
+                          //   'gender':_patientInfoController.genderController.value.text,
+                          //   'dob':_patientInfoController.birthdateController.value.text,
+                          //   'weight':_patientInfoController.weightController.value.text,
+                          //   'height':_patientInfoController.heightController.value.text,
+                          // });
+                          profileData['name']=_patientInfoController.nameController.value.text;
+                          profileData['gender']=_patientInfoController.genderController.value.text;
+                          profileData['dob']=_patientInfoController.birthdateController.value.text;
+                          profileData['weight']=_patientInfoController.weightController.value.text;
+                          profileData['height']=_patientInfoController.heightController.value.text;
+                          (await SharedPref.getStringPreference(SharedPref.MOBILE)).logD;
+                          storeData(await SharedPref.getStringPreference(SharedPref.MOBILE), profileData);                        //  context.go('/PatientProfileScreen');
+                        retrieveData(await SharedPref.getStringPreference(SharedPref.MOBILE)).then((value){
 
-                          context.go('/PatientProfileScreen');
+                          value.logD;
+                          context.go('/HomeView');
+                        });
                         },
                         isDisabled: false,
                       ),
@@ -338,7 +370,30 @@ class _PatientInfoFormScreenState extends State<PatientInfoFormScreen> {
       },
     );
   }
+  Future<Map<String, dynamic>?> retrieveData(String mobileNumber) async {
+    try {
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('users').doc(mobileNumber).get();
+      if (snapshot.exists) {
+        snapshot.data().logD;
+        return snapshot.data() as Map<String, dynamic>;
+      } else {
+        ('No data found for mobile number: $mobileNumber').logD;
+        return null;
+      }
+    } catch (e) {
+      ('Error retrieving data: $e').logD;
+      return null;
+    }
+  }
 
+  void storeData(String mobileNumber, Map<String, dynamic> data) async {
+    try {
+      await FirebaseFirestore.instance.collection('users').doc(mobileNumber).set(data);
+      ('Data stored successfully for mobile number: $mobileNumber').logD;
+    } catch (e) {
+      ('Error storing data: $e').logD;
+    }
+  }
   Future<DateTime?> datePicker(BuildContext context) async {
     return await showDatePicker(
       context: context,
