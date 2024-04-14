@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -9,6 +8,7 @@ import 'package:makaihealth/utility/dimension.dart';
 import 'package:makaihealth/utility/string_constants.dart';
 import 'package:makaihealth/utility/text_styles.dart';
 import 'package:makaihealth/widget/app_button.dart';
+import 'package:makaihealth/widget/space_horizontal.dart';
 import 'package:makaihealth/widget/space_vertical.dart';
 import 'package:makaihealth/widget/text_form_filed.dart';
 
@@ -24,7 +24,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   DateTime? selectedDate;
   String hintText = 'Birth Date';
 
-  EditProfileController _editProfileController =
+  final EditProfileController _editProfileController =
       Get.put(EditProfileController());
 
   @override
@@ -44,7 +44,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       // IconButton(onPressed: (){}, icon: const Icon(Icons.arrow_back,color: AppColor.black,)),
-                      SpaceV(AppSize.h40),
+                      // SpaceV(AppSize.h40),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -52,26 +52,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             onTap: () {
                               context.go('/PatientProfileScreen');
                             },
-                            child: SvgPicture.asset(
-                              "assets/images/svgs/backArrow.svg",
-                              color: AppColor.black,
-                            ),
+                              child: const Icon(Icons.arrow_back,color: AppColor.appbarBgColor)
                           ),
-                          SizedBox(
-                            width: AppSize.w60,
-                          ),
+                          SpaceH(AppSize.w60),
                           Text(
                             editProfile,
                             style: textSemiBold.copyWith(
                                 color: AppColor.black, fontSize: AppSize.sp22),
-                            maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
-
                       SpaceV(AppSize.h40),
-
                       AppFormTextField(
                         label: 'Name',
                         hint: 'Name',
@@ -89,7 +81,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             fontWeight: FontWeight.w500),
                         keyboardType: TextInputType.emailAddress,
                       ),
-
                       SpaceV(AppSize.h20),
                       Row(
                         children: [
@@ -138,7 +129,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         .birthdateController.text = date;
                                     setState(() {
                                       hintText =
-                                          date; // Update the hint text with selected date
+                                          date;
                                     });
                                   }
                                 },
@@ -147,7 +138,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       .birthdateController.text.isEmpty) {
                                     return 'Enter your Birthdate';
                                   }
-                                  return null; // Return null if validation passes
+                                  return null;
                                 },
                                 textStyle: textRegular.copyWith(
                                   fontSize: AppSize.sp12,
@@ -218,7 +209,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ),
                         ],
                       ),
-
                       SpaceV(AppSize.h40),
                     ],
                   ),
@@ -235,7 +225,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             submitButton,
             () {
               if (_formKey.currentState!.validate()) {
-                context.go('/MedicalConditionScreen');
+                context.go('/PatientProfileScreen');
               }
             },
             isDisabled: false,

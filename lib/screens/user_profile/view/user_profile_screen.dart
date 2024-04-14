@@ -1,16 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
-import 'package:makaihealth/extensions/extensions.dart';
+import 'package:makaihealth/gen/assets.gen.dart';
 import 'package:makaihealth/utility/colors.dart';
 import 'package:makaihealth/utility/dimension.dart';
 import 'package:makaihealth/utility/string_constants.dart';
 import 'package:makaihealth/utility/text_styles.dart';
-import 'package:makaihealth/widget/app_button.dart';
+import 'package:makaihealth/widget/space_horizontal.dart';
 import 'package:makaihealth/widget/space_vertical.dart';
-import 'package:makaihealth/widget/text_form_filed.dart';
 
 class PatientProfileScreen extends StatefulWidget {
   const PatientProfileScreen({super.key});
@@ -32,60 +30,50 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
               padding: const EdgeInsets.only(left: 10, right: 10),
               child: Column(
                 children: [
-                  SizedBox(
-                    height: AppSize.h260,
-                  ),
+                  SpaceV(AppSize.h160),
                   Center(
                     child: Column(
                       children: [
-                        GestureDetector(
-                          onTap: () {
-                             
-                              context.go('/EditProfileScreen');
-                          
-                          },
-                          child: SvgPicture.asset(
-                            "assets/images/svgs/editProfileimg.svg",
-                          ),
+                        Image.asset(
+                          "assets/images/png/EditProfileImage.png",
+                          fit: BoxFit.contain,
+                          // width:
+                          //     MediaQuery.of(context).size.width * 0.14,
                         ),
+                        SpaceV(AppSize.h10),
                         Text(
-                          "sahil chaure",
+                          sahilChaure,
                           style: textBold.copyWith(
                               fontSize: AppSize.sp18, color: AppColor.black),
                         ),
                         Text(
-                          "sahilchaurr1999@gmai.com| +91 234 ",
+                          sahilChaureEmail,
                           style: textRegular.copyWith(
                               fontSize: AppSize.sp14, color: AppColor.black),
                         )
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: AppSize.h16,
-                  ),
+                  SpaceV(AppSize.h16),
                   Card(
                     color: Colors.white,
                     elevation: 4,
                     shadowColor: AppColor.textColor,
                     child: Padding(
-                      padding: EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: Column(
                         children: [
                           GestureDetector(
                             onTap: () {
-                               context.go('/UserProfileHomeScreen');
+                              context.go('/UserProfileHomeScreen');
                             },
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SvgPicture.asset(
-                                    "assets/images/svgs/profile-line.svg"),
-                                SizedBox(
-                                  width: AppSize.w14,
-                                ),
+                                Assets.images.svgs.profileLine.svg(),
+                                SpaceH(AppSize.w14),
                                 Text(
-                                  "Edit profile information",
+                                  editProfileInformation,
                                   style: textRegular.copyWith(
                                       fontSize: AppSize.sp12,
                                       color: AppColor.black),
@@ -93,26 +81,21 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(
-                            height: AppSize.h12,
-                          ),
+                          SpaceV(AppSize.h12),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                   context.go('/NotificationScreen');
+                                  context.go('/NotificationScreen');
                                 },
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    SvgPicture.asset(
-                                        "assets/images/svgs/notification-line.svg"),
-                                    SizedBox(
-                                      width: AppSize.w14,
-                                    ),
+                                    Assets.images.svgs.notificationLine.svg(),
+                                    SpaceH(AppSize.w14),
                                     Text(
-                                      "Notifications",
+                                      notifications,
                                       style: textRegular.copyWith(
                                           fontSize: AppSize.sp12,
                                           color: AppColor.black),
@@ -121,29 +104,24 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                                 ),
                               ),
                               Text(
-                                "ON",
+                                on,
                                 style: textRegular.copyWith(
                                     fontSize: AppSize.sp12,
                                     color: AppColor.textBlueColor),
                               )
                             ],
                           ),
-                          SizedBox(
-                            height: AppSize.h12,
-                          ),
+                          SpaceV(AppSize.h12),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SvgPicture.asset(
-                                      "assets/images/svgs/translateLanguage.svg"),
-                                  SizedBox(
-                                    width: AppSize.w14,
-                                  ),
+                                  Assets.images.svgs.translateLanguage.svg(),
+                                  SpaceH(AppSize.w14),
                                   Text(
-                                    "Language",
+                                    language,
                                     style: textRegular.copyWith(
                                         fontSize: AppSize.sp12,
                                         color: AppColor.black),
@@ -151,38 +129,71 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                                 ],
                               ),
                               Text(
-                                "English",
+                                english,
                                 style: textRegular.copyWith(
                                     fontSize: AppSize.sp12,
                                     color: AppColor.textBlueColor),
                               )
                             ],
                           ),
+                          SpaceV(AppSize.h12),
+                          GestureDetector(
+                            onTap: () {
+                              context.go('/MedicalConditionScreen');
+                            },
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Assets.images.svgs.translateLanguage.svg(),
+                                SpaceH(AppSize.w14),
+                                Text(
+                                  medicalCondition,
+                                  style: textRegular.copyWith(
+                                      fontSize: AppSize.sp12,
+                                      color: AppColor.black),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SpaceV(AppSize.h12),
+                          GestureDetector(
+                            onTap: () {
+                              context.go('/DoctorInfoScreen');
+                            },
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Assets.images.svgs.translateLanguage.svg(),
+                                SpaceH(AppSize.w14),
+                                Text(
+                                  medicinesName,
+                                  style: textRegular.copyWith(
+                                      fontSize: AppSize.sp12,
+                                      color: AppColor.black),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: AppSize.h10,
-                  ),
+                  SpaceV(AppSize.h10),
                   Card(
                     color: Colors.white,
                     elevation: 4,
                     shadowColor: AppColor.textColor,
                     child: Padding(
-                      padding: EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: Column(
                         children: [
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SvgPicture.asset(
-                                  "assets/images/svgs/securitmg.svg"),
-                              SizedBox(
-                                width: AppSize.w14,
-                              ),
+                              Assets.images.svgs.securitmg.svg(),
+                              SpaceH(AppSize.w14),
                               Text(
-                                "Security",
+                                security,
                                 style: textRegular.copyWith(
                                     fontSize: AppSize.sp12,
                                     color: AppColor.black),
@@ -193,65 +204,52 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: AppSize.h10,
-                  ),
+                  SpaceV(AppSize.h10),
                   Card(
                     color: Colors.white,
                     elevation: 4,
                     shadowColor: AppColor.textColor,
                     child: Padding(
-                      padding: EdgeInsets.all(16.0),
+                      padding: EdgeInsets.all(
+                        AppSize.w16,
+                      ),
                       child: Column(
                         children: [
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SvgPicture.asset(
-                                  "assets/images/svgs/contacts-line.svg"),
-                              SizedBox(
-                                width: AppSize.w14,
-                              ),
+                              Assets.images.svgs.contactsLine.svg(),
+                              SpaceH(AppSize.w14),
                               Text(
-                                "Help & Support",
+                                helpSupport,
                                 style: textRegular.copyWith(
                                     fontSize: AppSize.sp12,
                                     color: AppColor.black),
                               )
                             ],
                           ),
-                          SizedBox(
-                            height: AppSize.h12,
-                          ),
+                          SpaceV(AppSize.h12),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SvgPicture.asset(
-                                  "assets/images/svgs/chat-quote-line.svg"),
-                              SizedBox(
-                                width: AppSize.w14,
-                              ),
+                              Assets.images.svgs.chatQuoteLine.svg(),
+                              SpaceH(AppSize.w14),
                               Text(
-                                "Contact us",
+                                contactUs,
                                 style: textRegular.copyWith(
                                     fontSize: AppSize.sp12,
                                     color: AppColor.black),
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: AppSize.h12,
-                          ),
+                          SpaceV(AppSize.h12),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SvgPicture.asset(
-                                  "assets/images/svgs/lock-2-line.svg"),
-                              SizedBox(
-                                width: AppSize.w14,
-                              ),
+                              Assets.images.svgs.lock2Line.svg(),
+                              SpaceV(AppSize.h14),
                               Text(
-                                "Privacy policy",
+                                privacyPolicy,
                                 style: textRegular.copyWith(
                                     fontSize: AppSize.sp12,
                                     color: AppColor.black),
@@ -268,41 +266,37 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
           ),
         ),
         Positioned(
-          child: SvgPicture.asset(
-            "assets/images/svgs/profileConImg.svg",
-          ),
+          child: Assets.images.svgs.profileConImg.svg(),
         ),
         Positioned(
           top: AppSize.h80,
           left: AppSize.w16,
           child: GestureDetector(
-            onTap: () {
-               context.go('/PatientInfoFormScreen');
-            },
-            child: SvgPicture.asset(
-              "assets/images/svgs/backArrow.svg",
-              color: AppColor.black,
-            ),
-          ),
+              onTap: () {
+                context.go('/PatientInfoFormScreen');
+              },
+              child:
+                  const Icon(Icons.arrow_back, color: AppColor.appbarBgColor)),
         ),
         Positioned(
             top: AppSize.h86,
             right: AppSize.w16,
             child: Row(
               children: [
-                SvgPicture.asset(
-                  "assets/images/svgs/historyFill.svg",
-                  color: AppColor.black,
-                ),
-                SizedBox(
-                  width: AppSize.w16,
-                ),
-                SvgPicture.asset(
-                  "assets/images/svgs/threeDottedprofile.svg",
-                  color: AppColor.black,
-                ),
+                Assets.images.svgs.historyFill.svg(),
+                SpaceH(AppSize.w16),
+                Assets.images.svgs.threeDottedprofile.svg(),
               ],
-            ))
+            )),
+        Positioned(
+          top: MediaQuery.of(context).size.height * 0.32,
+          right: MediaQuery.of(context).size.height * 0.15,
+          child: GestureDetector(
+              onTap: () {
+                context.go('/EditProfileScreen');
+              },
+              child: Assets.images.svgs.editProfileimg.svg()),
+        )
       ],
     );
   }

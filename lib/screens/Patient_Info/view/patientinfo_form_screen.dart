@@ -372,7 +372,7 @@ class _PatientInfoFormScreenState extends State<PatientInfoFormScreen> {
   }
   Future<Map<String, dynamic>?> retrieveData(String mobileNumber) async {
     try {
-      DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('users').doc(mobileNumber).get();
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('usersProfile').doc(mobileNumber).get();
       if (snapshot.exists) {
         snapshot.data().logD;
         return snapshot.data() as Map<String, dynamic>;
@@ -388,7 +388,7 @@ class _PatientInfoFormScreenState extends State<PatientInfoFormScreen> {
 
   void storeData(String mobileNumber, Map<String, dynamic> data) async {
     try {
-      await FirebaseFirestore.instance.collection('users').doc(mobileNumber).set(data);
+      await FirebaseFirestore.instance.collection('usersProfile').doc(mobileNumber).set(data);
       ('Data stored successfully for mobile number: $mobileNumber').logD;
     } catch (e) {
       ('Error storing data: $e').logD;

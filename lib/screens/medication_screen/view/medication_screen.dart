@@ -32,7 +32,7 @@ class _MedicationScreenState extends State<MedicationScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(0),
+            padding: const EdgeInsets.all(0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,7 +160,7 @@ class _MedicationScreenState extends State<MedicationScreen> {
                           Padding(
                             padding: const EdgeInsets.only(left: 3, right: 3),
                             child: Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 border: Border(
                                   left: BorderSide(
                                     color: AppColor.rediousfillcolot,
@@ -256,7 +256,7 @@ class _MedicationScreenState extends State<MedicationScreen> {
                           Padding(
                             padding: const EdgeInsets.only(left: 3, right: 3),
                             child: Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 border: Border(
                                   left: BorderSide(
                                     color: AppColor.rediousfillcolot,
