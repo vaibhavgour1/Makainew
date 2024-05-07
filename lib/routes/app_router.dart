@@ -6,6 +6,7 @@ import 'package:makaihealth/screens/home/views/home_view.dart';
 import 'package:makaihealth/screens/login_signup/view/Verifyotp_screen.dart';
 import 'package:makaihealth/screens/login_signup/view/login_signup_screen.dart';
 import 'package:makaihealth/screens/login_signup/view/loginwith_email_screen.dart';
+import 'package:makaihealth/screens/medical_condition/view/drug_medicine_tab.dart';
 import 'package:makaihealth/screens/medical_condition/view/medical_condition_screen.dart';
 import 'package:makaihealth/screens/medication_screen/view/medication_screen.dart';
 import 'package:makaihealth/screens/movile_number/view/enter_mobile_number.dart';
@@ -56,6 +57,11 @@ final GoRouter router = GoRouter(
       // Optional, add name to your routes. Allows you navigate by name instead of path
       path: '/HomeView',
       builder: (context, state) =>  HomeView(),
+    ),GoRoute(
+      name: 'DrugMedicineTabScreen',
+      // Optional, add name to your routes. Allows you navigate by name instead of path
+      path: '/DrugMedicineTabScreen',
+      builder: (context, state) =>  DrugMedicineTabScreen(),
     ),
     GoRoute(
       name: 'LoginwithEmailScreen',

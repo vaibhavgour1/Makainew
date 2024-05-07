@@ -42,25 +42,25 @@ class LoginSignupScreen extends StatelessWidget {
                 isDisabled: false,
               ),
               SpaceV(AppSize.h26),
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Dont have an account ? ',
-                      style: textSemiBold.copyWith(
-                        fontSize: AppSize.sp16,
-                        color: AppColor.black,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'sigh up',
-                      style: textSemiBold.copyWith(
-                          fontSize: AppSize.sp16,
-                          color: AppColor.textBlueColor),
-                    ),
-                  ],
-                ),
-              )
+              // RichText(
+              //   text: TextSpan(
+              //     children: [
+              //       TextSpan(
+              //         text: 'Dont have an account ? ',
+              //         style: textSemiBold.copyWith(
+              //           fontSize: AppSize.sp16,
+              //           color: AppColor.black,
+              //         ),
+              //       ),
+              //       TextSpan(
+              //         text: 'sigh up',
+              //         style: textSemiBold.copyWith(
+              //             fontSize: AppSize.sp16,
+              //             color: AppColor.textBlueColor),
+              //       ),
+              //     ],
+              //   ),
+              // )
             ])),
       ),
     );

@@ -155,7 +155,7 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
                             height: MediaQuery.of(context).size.height * 0.2,
                             child: ListView.builder(
                               padding: EdgeInsets.zero,
-                              itemCount: addmymedicalCondition.length,
+                              itemCount: dosageList.length,
                               itemBuilder: (BuildContext context, int index) {
                                 var medicalCon = addmymedicalCondition[index];
                                 return Column(
@@ -168,7 +168,7 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
                                           .svg(),
                                       iconColor: AppColor.black,
                                       title: Text(
-                                        medicalCon["name"]!,
+                                        "${medicalCon["name"]!}, ${dosageList[index]}, ${frequencyList[index]}",
                                         style: textBold.copyWith(
                                             fontSize: AppSize.sp14,
                                             color: AppColor.black),
@@ -427,7 +427,9 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
                 medicineData.logD;
                 storeData(
                     await SharedPref.getStringPreference(SharedPref.MOBILE),
-                    medicineData); //  context.go('/PatientProfileScreen');
+                    medicineData);
+                //Navigator.pop(context);
+                 context.go('/PatientProfileScreen');
                 // retrieveData(
                 //         await SharedPref.getStringPreference(SharedPref.MOBILE))
                 //     .then((value) {
@@ -469,6 +471,7 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
           .doc(mobileNumber)
           .set(data);
       ('Data stored successfully for mobile number: $mobileNumber').logD;
+
     } catch (e) {
       ('Error storing data: $e').logD;
     }

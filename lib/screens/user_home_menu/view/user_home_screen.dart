@@ -23,7 +23,7 @@ class UserProfileHomeScreen extends StatefulWidget {
 class _UserProfileHomeScreenState extends State<UserProfileHomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   UserHomeMenuController _userHomeMenuController =
-      Get.put(UserHomeMenuController());
+  Get.put(UserHomeMenuController());
   int selectedTimingIndex = 2;
   int selectedDuarationIndex = 4;
   int foddSelected = 0;
@@ -104,17 +104,31 @@ class _UserProfileHomeScreenState extends State<UserProfileHomeScreen> {
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
+        leadingWidth: 100,
         leading: Padding(
           padding: const EdgeInsets.only(left: 15, right: 0),
-          child: GestureDetector(
-            onTap: _openDrawer,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SvgPicture.asset(
-                'assets/images/svgs/homeDrawerImg.svg',
-                color: Colors.black,
+          child: Row(
+            children: [
+              GestureDetector(
+                onTap: _openDrawer,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SvgPicture.asset(
+                    'assets/images/svgs/homeDrawerImg.svg',
+                    color: Colors.black,
+                  ),
+                ),
               ),
-            ),
+              GestureDetector(
+                onTap: () {
+                  context.go('/HomeView');
+                },
+                child: SvgPicture.asset(
+                  "assets/images/svgs/backArrow.svg",
+                  color: AppColor.black,
+                ),
+              ),
+            ],
           ),
         ),
         actions: [
@@ -173,39 +187,39 @@ class _UserProfileHomeScreenState extends State<UserProfileHomeScreen> {
                         },
                         child: _userHomeMenuController.imageFile != null
                             ? Container(
-                                height:
-                                    MediaQuery.of(context).size.width * 0.15,
-                                width: MediaQuery.of(context).size.width * 0.15,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                    MediaQuery.of(context).size.width * 0.115,
-                                  ),
-                                  //border: Border.all(color: AppColor.black),
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(
-                                    MediaQuery.of(context).size.width * 0.115,
-                                  ),
-                                  child: InteractiveViewer(
-                                    maxScale: 3.6,
-                                    child: Image.file(
-                                      File(_userHomeMenuController.imagePath!),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Image.asset(
-                                    "assets/images/png/profileImagee.png",
-                                    fit: BoxFit.contain,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.14,
-                                  ),
-                                ),
+                          height:
+                          MediaQuery.of(context).size.width * 0.15,
+                          width: MediaQuery.of(context).size.width * 0.15,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              MediaQuery.of(context).size.width * 0.115,
+                            ),
+                            //border: Border.all(color: AppColor.black),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(
+                              MediaQuery.of(context).size.width * 0.115,
+                            ),
+                            child: InteractiveViewer(
+                              maxScale: 3.6,
+                              child: Image.file(
+                                File(_userHomeMenuController.imagePath!),
+                                fit: BoxFit.cover,
                               ),
+                            ),
+                          ),
+                        )
+                            : Container(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image.asset(
+                              "assets/images/png/profileImagee.png",
+                              fit: BoxFit.contain,
+                              width: MediaQuery.of(context).size.width *
+                                  0.14,
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -386,38 +400,38 @@ class _UserProfileHomeScreenState extends State<UserProfileHomeScreen> {
                       },
                       child: _userHomeMenuController.imageFile != null
                           ? Container(
-                              height: MediaQuery.of(context).size.width * 0.15,
-                              width: MediaQuery.of(context).size.width * 0.15,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                  MediaQuery.of(context).size.width * 0.115,
-                                ),
-                                //border: Border.all(color: AppColor.black),
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(
-                                  MediaQuery.of(context).size.width * 0.115,
-                                ),
-                                child: InteractiveViewer(
-                                  maxScale: 3.6,
-                                  child: Image.file(
-                                    File(_userHomeMenuController.imagePath!),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            )
-                          : Container(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image.asset(
-                                  "assets/images/png/profileImagee.png",
-                                  fit: BoxFit.contain,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.14,
-                                ),
-                              ),
+                        height: MediaQuery.of(context).size.width * 0.15,
+                        width: MediaQuery.of(context).size.width * 0.15,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            MediaQuery.of(context).size.width * 0.115,
+                          ),
+                          //border: Border.all(color: AppColor.black),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(
+                            MediaQuery.of(context).size.width * 0.115,
+                          ),
+                          child: InteractiveViewer(
+                            maxScale: 3.6,
+                            child: Image.file(
+                              File(_userHomeMenuController.imagePath!),
+                              fit: BoxFit.cover,
                             ),
+                          ),
+                        ),
+                      )
+                          : Container(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.asset(
+                            "assets/images/png/profileImagee.png",
+                            fit: BoxFit.contain,
+                            width:
+                            MediaQuery.of(context).size.width * 0.14,
+                          ),
+                        ),
+                      ),
                     ),
                     SizedBox(
                       width: AppSize.w20,
@@ -465,11 +479,11 @@ class _UserProfileHomeScreenState extends State<UserProfileHomeScreen> {
                 SizedBox(
                   height: AppSize.h12,
                 ),
-                Container(
+                SizedBox(
                   height: AppSize.h42 * ((dataList.length / 3).ceil()),
                   child: Column(
                     children:
-                        List.generate((dataList.length / 3).ceil(), (rowIndex) {
+                    List.generate((dataList.length / 3).ceil(), (rowIndex) {
                       return Row(
                         children: List.generate(3, (columnIndex) {
                           final index = rowIndex * 3 + columnIndex;
@@ -484,8 +498,8 @@ class _UserProfileHomeScreenState extends State<UserProfileHomeScreen> {
                                       right: 10, bottom: 10),
                                   child: SizedBox(
                                     width:
-                                        MediaQuery.of(context).size.width / 3 -
-                                            20, // Adjust width here
+                                    MediaQuery.of(context).size.width / 3 -
+                                        20, // Adjust width here
                                     child: Container(
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
@@ -512,7 +526,7 @@ class _UserProfileHomeScreenState extends State<UserProfileHomeScreen> {
                             // Display plus icon for the last item
                             return Padding(
                               padding:
-                                  const EdgeInsets.only(right: 10, bottom: 10),
+                              const EdgeInsets.only(right: 10, bottom: 10),
                               child: GestureDetector(
                                 onTap: () {
                                   // Handle the tap on the plus icon
@@ -1035,7 +1049,7 @@ class _UserProfileHomeScreenState extends State<UserProfileHomeScreen> {
                 SizedBox(
                   height: AppSize.h16,
                 ),
-                Container(
+                SizedBox(
                   height: AppSize.h50,
                   child: ListView.separated(
                     itemCount: timingList.length,
@@ -1046,7 +1060,7 @@ class _UserProfileHomeScreenState extends State<UserProfileHomeScreen> {
                       return Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal:
-                                MediaQuery.of(context).size.width * 0.02),
+                            MediaQuery.of(context).size.width * 0.02),
                         child: Container(
                           height: AppSize.h40,
                           width: AppSize.w2,
@@ -1076,18 +1090,18 @@ class _UserProfileHomeScreenState extends State<UserProfileHomeScreen> {
                                     color: isSelected
                                         ? AppColor.textBlueColor
                                         : Colors
-                                            .white, // Conditional background color
+                                        .white, // Conditional background color
                                     borderRadius: BorderRadius.circular(
                                         8.0), // Add border radius for a rounded look
                                   ),
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal:
-                                            MediaQuery.of(context).size.width *
-                                                0.045,
+                                        MediaQuery.of(context).size.width *
+                                            0.045,
                                         vertical: MediaQuery.of(context)
-                                                .size
-                                                .width *
+                                            .size
+                                            .width *
                                             0.01), // 10% padding on both sides
                                     child: Text(
                                       userData["name"]!,
@@ -1127,7 +1141,7 @@ class _UserProfileHomeScreenState extends State<UserProfileHomeScreen> {
                   ),
                 ),
                 //////////
-                Container(
+                SizedBox(
                   height: AppSize.h20,
                   child: ListView.builder(
                     itemCount: foodList.length,
@@ -1140,7 +1154,7 @@ class _UserProfileHomeScreenState extends State<UserProfileHomeScreen> {
                       return Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal:
-                                MediaQuery.of(context).size.width * 0.022),
+                            MediaQuery.of(context).size.width * 0.022),
                         child: GestureDetector(
                           onTap: () {
                             setState(() {
@@ -1192,7 +1206,7 @@ class _UserProfileHomeScreenState extends State<UserProfileHomeScreen> {
                     color: AppColor.textBlueColor,
                   ),
                 ),
-                Container(
+                SizedBox(
                   height: AppSize.h20,
                   child: ListView.builder(
                     itemCount: addfoodList.length,
@@ -1205,7 +1219,7 @@ class _UserProfileHomeScreenState extends State<UserProfileHomeScreen> {
                       return Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal:
-                                MediaQuery.of(context).size.width * 0.044),
+                            MediaQuery.of(context).size.width * 0.044),
                         child: GestureDetector(
                           onTap: () {
                             setState(() {
@@ -1313,7 +1327,7 @@ class _UserProfileHomeScreenState extends State<UserProfileHomeScreen> {
                 SizedBox(
                   height: AppSize.h16,
                 ),
-                Container(
+                SizedBox(
                   height: AppSize.h50,
                   child: ListView.separated(
                     itemCount: duarationList.length,
@@ -1364,19 +1378,19 @@ class _UserProfileHomeScreenState extends State<UserProfileHomeScreen> {
                                         color: isSelected
                                             ? AppColor.textBlueColor
                                             : Colors
-                                                .white, // Conditional background color
+                                            .white, // Conditional background color
                                         borderRadius: BorderRadius.circular(
                                             8.0), // Add border radius for a rounded look
                                       ),
                                       child: Padding(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
+                                                .size
+                                                .width *
                                                 0.045,
                                             vertical: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
+                                                .size
+                                                .width *
                                                 0.01),
                                         child: Text(
                                           userduarationData["type"]!,
@@ -1404,3 +1418,7 @@ class _UserProfileHomeScreenState extends State<UserProfileHomeScreen> {
     );
   }
 }
+
+
+
+

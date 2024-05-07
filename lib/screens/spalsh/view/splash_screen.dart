@@ -141,12 +141,12 @@ login() async {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Assets.images.svgs.makaiLogo.svg(
-                    height: context.height * 0.20,
-                    width: context.height * 0.20),
+                    height: context.height * 0.15,
+                    width: context.height * 0.15),
                 Text(
-                  'MAK AI',
+                  'MAKAI',
                   style: textSemiBold.copyWith(
-                      color: AppColor.black, fontSize: AppSize.sp32),
+                      color: AppColor.black, fontSize: AppSize.sp28),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

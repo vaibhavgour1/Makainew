@@ -1,10 +1,13 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:makaihealth/api/retriveData.dart';
 import 'package:makaihealth/screens/user_profile/controller/edit_profile_controller.dart';
 import 'package:makaihealth/utility/colors.dart';
 import 'package:makaihealth/utility/dimension.dart';
+import 'package:makaihealth/utility/sharedpref.dart';
 import 'package:makaihealth/utility/string_constants.dart';
 import 'package:makaihealth/utility/text_styles.dart';
 import 'package:makaihealth/widget/app_button.dart';
@@ -26,7 +29,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   final EditProfileController _editProfileController =
       Get.put(EditProfileController());
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+getData();
+  }
+  getData() async {
+    String mobileNumber = await SharedPref.getStringPreference(SharedPref.MOBILE);
 
+    retrieveData(mobileNumber, 'usersProfile').then((value){
+      _editProfileController.namecontroller.text = value!['name'];
+      _editProfileController.genderController.text = value['dob'];
+      _editProfileController.birthdateController.text = value['gender'];
+      _editProfileController.weightController.text = value['weight'];
+      _editProfileController.heightController.text = value['name'];
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -68,6 +87,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         label: 'Name',
                         hint: 'Name',
                         controller: _editProfileController.namecontroller,
+                        readOnly: true,
                         validators: (value) {
                           if (_editProfileController
                               .namecontroller.text.isEmpty) {
@@ -92,6 +112,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               child: AppFormTextField(
                                 label: 'Gender',
                                 hint: 'Gender',
+                                readOnly: true,
                                 controller:
                                     _editProfileController.genderController,
                                 validators: (value) {
@@ -118,6 +139,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               child: AppFormTextField(
                                 label: 'Birth Date',
                                 hint: hintText,
+                                readOnly: true,
                                 controller:
                                     _editProfileController.birthdateController,
                                 onTap: () async {
@@ -165,6 +187,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 hint: 'Weight',
                                 controller:
                                     _editProfileController.weightController,
+                                readOnly: true,
                                 validators: (value) {
                                   if (_editProfileController
                                       .weightController.text.isEmpty) {
@@ -191,6 +214,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 hint: 'Height',
                                 controller:
                                     _editProfileController.heightController,
+                                readOnly: true,
                                 validators: (value) {
                                   if (_editProfileController
                                       .heightController.text.isEmpty) {

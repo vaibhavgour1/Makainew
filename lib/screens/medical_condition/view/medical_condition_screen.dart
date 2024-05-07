@@ -21,12 +21,16 @@ class MedicalConditionScreen extends StatefulWidget {
 
 class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
   bool showMyCondition = false;
-  bool showTextfieldButton = false;
+  bool showTextfieldButton = false,
+      showPastDisease = false,
+      showPastSurgery = false;
   Map<String, String> medicalConditionData = {};
   final TextEditingController _searchController = TextEditingController();
   final TextEditingController pastDiseaseController = TextEditingController();
   final TextEditingController pastSurgeryController = TextEditingController();
-  String search = '', pastDisease = '', pastSurgery = '';
+  String search = '',
+      pastDisease = '',
+      pastSurgery = '';
   String putData = '';
 
   final List<Map<String, String>> addmymedicalCondition = [];
@@ -42,7 +46,7 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
           body: SafeArea(
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.all(AppSize.w36),
+                padding: EdgeInsets.all(AppSize.w8),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,21 +70,20 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                         ),
                       ],
                     ),
-                    SpaceV(AppSize.h40),
+                  //  SpaceV(AppSize.h40),
                     if (showMyCondition)
-                      Column(
-                        children: [
-                          Text(
-                            myCondition,
-                            style: textSemiBold.copyWith(
-                                color: AppColor.black, fontSize: AppSize.sp22),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.start,
-                          ),
-                          SpaceV(AppSize.h10),
+
+                          // Text(
+                          //   myCondition,
+                          //   style: textSemiBold.copyWith(
+                          //       color: AppColor.black, fontSize: AppSize.sp22),
+                          //   maxLines: 1,
+                          //   overflow: TextOverflow.ellipsis,
+                          //   textAlign: TextAlign.start,
+                          // ),
+                          // SpaceV(AppSize.h10),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.18,
+                            height:MediaQuery.of(context).size.width * 0.14,
                             child: ListView.builder(
                               padding: EdgeInsets.zero,
                               itemCount: addmymedicalCondition.length,
@@ -91,24 +94,19 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                                 //     medicalCon["name"]!
                                 //         .toLowerCase()
                                 //         .contains(filterText)) {
-                                return Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    ListTile(
-                                      leading: Assets
-                                          .images.svgs.medicalconditionMyconImg
-                                          .svg(),
-                                      iconColor: AppColor.black,
-                                      title: Text(
-                                        medicalCon["name"]!,
-                                        style: textBold.copyWith(
-                                            fontSize: AppSize.sp14,
-                                            color: AppColor.black),
-                                      ),
-                                      onTap: () {},
-                                    ),
-                                  ],
+                                return ListTile(
+                                  tileColor: AppColor.chatBlueBgColor.withOpacity(.3),
+                                  leading: Assets
+                                      .images.svgs.medicalconditionMyconImg
+                                      .svg(),
+                                  iconColor: AppColor.black,
+                                  title: Text(
+                                    medicalCon["name"]!,
+                                    style: textBold.copyWith(
+                                        fontSize: AppSize.sp16,
+                                        color: AppColor.black),
+                                  ),
+                                  onTap: () {},
                                 );
                                 // } else {
                                 //   return Container();
@@ -116,18 +114,13 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                               },
                             ),
                           ),
-                          SpaceV(AppSize.h12),
-                        ],
-                      ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Center(
-                        child: Text(
-                          addCondition,
-                          style: textBold.copyWith(
-                            fontSize: AppSize.sp18,
-                            color: AppColor.black,
-                          ),
+
+                    Center(
+                      child: Text(
+                        addCondition,
+                        style: textBold.copyWith(
+                          fontSize: AppSize.sp18,
+                          color: AppColor.black,
                         ),
                       ),
                     ),
@@ -146,104 +139,182 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                             width: 1.5,
                           ),
                         ),
-                        child: Row(
-                          children: [
-                            // Padding(
-                            //   padding: const EdgeInsets.only(left: 10),
-                            //   child: Icon(
-                            //     Icons.search,
-                            //     color: Colors.black,
-                            //   ),
-                            // ),
-                            SpaceH(AppSize.w10),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  TextFormField(
-                                    controller: _searchController,
-                                    onChanged: (String? value) {
-                                      setState(() {
-                                        showTextfieldButton = true;
-                                        search = value.toString();
-                                      });
-                                    },
-                                    decoration: const InputDecoration(
-                                      hintText: "Add your condition",
-                                      hintStyle: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14.0,
-                                        color: Colors.black,
-                                      ),
-                                      border: InputBorder.none,
-                                    ),
-                                  ),
-                                  TextFormField(
-                                    controller: pastDiseaseController,
-                                    onChanged: (String? value) {
-                                      setState(() {
-                                        showTextfieldButton = true;
-                                        pastDisease = value.toString();
-                                      });
-                                    },
-                                    decoration: const InputDecoration(
-                                      hintText: "Add your Past Disease",
-                                      hintStyle: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14.0,
-                                        color: Colors.black,
-                                      ),
-                                      border: InputBorder.none,
-                                    ),
-                                  ),
-                                  TextFormField(
-                                    controller: pastSurgeryController,
-                                    onChanged: (String? value) {
-                                      setState(() {
-                                        showTextfieldButton = true;
-                                        pastSurgery = value.toString();
-                                      });
-                                    },
-                                    decoration: const InputDecoration(
-                                      hintText: "Add your Past Surgery",
-                                      hintStyle: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14.0,
-                                        color: Colors.black,
-                                      ),
-                                      border: InputBorder.none,
-                                    ),
-                                  ),
-                                ],
+                        child: TextFormField(
+                          controller: _searchController,
+                          onChanged: (String? value) {
+                            setState(() {
+                              showTextfieldButton = true;
+                              search = value.toString();
+                            });
+                          },
+                          decoration: const InputDecoration(
+                              hintText: "Add your condition",
+                              hintStyle: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14.0,
+                                color: Colors.black,
                               ),
-                            ),
-                          ],
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 4, horizontal: 8)),
                         ),
                       ),
                     ),
-
-                    SpaceV(AppSize.h20),
                     if (showTextfieldButton)
-                      Column(
-                        children: [
-                          AppButton(
-                            addCondition,
+                      AppButton(
+                        addCondition,
                             () {
-                              setState(() {
-                                showMyCondition = true;
+                          setState(() {
+                            showMyCondition = true;
 
-                                addmymedicalCondition.add({
-                                  "name": search,
-                                });
+                            addmymedicalCondition.add({
+                              "name": search,
+                            });
 
-                                _searchController.clear();
+                            _searchController.clear();
 
-                                showTextfieldButton = false;
-                              });
-                            },
-                            isDisabled: false,
-                          ),
-                        ],
+                            showTextfieldButton = false;
+                          });
+                        },
+                        isDisabled: false,
                       ),
+                    if (pastDisease.isNotEmpty)
+                      ListTile(
+                        leading: Assets
+                            .images.svgs.medicalconditionMyconImg
+                            .svg(),
+                        iconColor: AppColor.black,
+                        title: Text(
+                          pastDisease,
+                          style: textBold.copyWith(
+                              fontSize: AppSize.sp16,
+                              color: AppColor.black),
+                        ),
+                        onTap: () {},
+                      )
+                    ,
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          showPastDisease = true;
+                        });
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 4),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(0),
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 1.5,
+                          ),
+                        ),
+                        child: TextFormField(
+                          controller: pastDiseaseController,
+                          onChanged: (String? value) {
+                            setState(() {
+                              showPastDisease = true;
+                              pastDisease = value.toString();
+                            });
+                          },
+                          decoration: const InputDecoration(
+                            hintText: "Add your Past Disease",
+                            hintStyle: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14.0,
+                              color: Colors.black,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 4, horizontal: 8),
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    if (showPastDisease)
+                      AppButton(
+                        addCondition,
+                            () {
+                          setState(() {
+                            showPastDisease = true;
+
+                            pastDiseaseController.clear();
+
+
+                            showPastDisease = false;
+                          });
+                        },
+                        isDisabled: false,
+                      ),
+                    if (pastSurgery.isNotEmpty)
+                      ListTile(
+                        leading: Assets
+                            .images.svgs.medicalconditionMyconImg
+                            .svg(),
+                        iconColor: AppColor.black,
+                        title: Text(
+                          pastSurgery,
+                          style: textBold.copyWith(
+                              fontSize: AppSize.sp16,
+                              color: AppColor.black),
+                        ),
+                        onTap: () {},
+                      ),
+
+
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          showPastSurgery = true;
+                        });
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 4),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(0),
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 1.5,
+                          ),
+                        ),
+                        child: TextFormField(
+                          controller: pastSurgeryController,
+                          onChanged: (String? value) {
+                            setState(() {
+                              showPastSurgery = true;
+                              pastSurgery = value.toString();
+                            });
+                          },
+                          decoration: const InputDecoration(
+                              hintText: "Add your Past Surgery",
+                              hintStyle: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14.0,
+                                color: Colors.black,
+                              ),
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 4, horizontal: 8)
+                          ),
+                        ),
+                      ),
+                    ),
+                    if (showPastSurgery)
+                      AppButton(
+                        addCondition,
+                            () {
+                          setState(() {
+                            showPastSurgery = true;
+
+                            pastSurgeryController.clear();
+
+
+                            showPastSurgery = false;
+                          });
+                        },
+                        isDisabled: false,
+                      ),
+                    SpaceV(AppSize.h20),
+
                     SpaceV(AppSize.h20),
                     // if(showMyCondition)
                     // SizedBox(
@@ -295,12 +366,21 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
         ),
         if (showMyCondition == false)
           Positioned(
-            bottom: MediaQuery.of(context).size.height * 0.02,
-            left: MediaQuery.of(context).size.width * 0.07,
-            right: MediaQuery.of(context).size.width * 0.07,
+            bottom: MediaQuery
+                .of(context)
+                .size
+                .height * 0.02,
+            left: MediaQuery
+                .of(context)
+                .size
+                .width * 0.07,
+            right: MediaQuery
+                .of(context)
+                .size
+                .width * 0.07,
             child: AppButton(
               selectCondition,
-              () {
+                  () {
                 setState(() {
                   showMyCondition = false;
                 });
@@ -310,13 +390,24 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
           )
         else
           Positioned(
-            bottom: MediaQuery.of(context).size.height * 0.02,
-            left: MediaQuery.of(context).size.width * 0.07,
-            right: MediaQuery.of(context).size.width * 0.07,
+            bottom: MediaQuery
+                .of(context)
+                .size
+                .height * 0.02,
+            left: MediaQuery
+                .of(context)
+                .size
+                .width * 0.07,
+            right: MediaQuery
+                .of(context)
+                .size
+                .width * 0.07,
             child: AppButton(
               submitButton,
-              () async {
-                addmymedicalCondition.toString().logD;
+                  () async {
+                addmymedicalCondition
+                    .toString()
+                    .logD;
                 List<String> valuesList = addmymedicalCondition
                     .map((map) => map.values)
                     .expand((values) => values)
@@ -327,7 +418,7 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                   showTextfieldButton = false;
                   showMyCondition = false;
                 });
-                pastSurgeryController.text=pastDisease;
+                pastSurgeryController.text = pastDisease;
                 pastDiseaseController.text = pastDisease;
                 medicalConditionData['ConditionType'] = valuesList.toString();
                 medicalConditionData['PastDisease'] = pastDisease.toString();
@@ -338,7 +429,7 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                     await SharedPref.getStringPreference(SharedPref.MOBILE),
                     medicalConditionData); //  context.go('/PatientProfileScreen');
                 retrieveData(
-                        await SharedPref.getStringPreference(SharedPref.MOBILE))
+                    await SharedPref.getStringPreference(SharedPref.MOBILE))
                     .then((value) {
                   value.logD;
                   context.go('/HomeView');
@@ -359,7 +450,9 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
           .doc(mobileNumber)
           .get();
       if (snapshot.exists) {
-        snapshot.data().logD;
+        snapshot
+            .data()
+            .logD;
         return snapshot.data() as Map<String, dynamic>;
       } else {
         ('No data found for mobile number: $mobileNumber').logD;

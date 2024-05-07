@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:makaihealth/extensions/extensions.dart';
 import 'package:makaihealth/screens/login_signup/view/Verifyotp_screen.dart';
 import 'package:makaihealth/utility/colors.dart';
 import 'package:makaihealth/utility/dimension.dart';
@@ -23,7 +24,7 @@ class _EnterMobileNUmberState extends State<EnterMobileNUmber> {
   String phoneNumber = "";
   TextEditingController countryController = TextEditingController();
   FirebaseAuth auth = FirebaseAuth.instance;
-
+bool check=false;
   @override
   void initState() {
     // TODO: implement initState
@@ -123,7 +124,9 @@ class _EnterMobileNUmberState extends State<EnterMobileNUmber> {
                             keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
                               border: InputBorder.none,
+
                             ),
+                            readOnly: true,
                           ),
                         ),
                         const Text(
@@ -139,22 +142,29 @@ class _EnterMobileNUmberState extends State<EnterMobileNUmber> {
                             phoneNumber = value;
                           },
                           keyboardType: TextInputType.phone,
-                          decoration: const InputDecoration(
+                          decoration:  InputDecoration(
                             border: InputBorder.none,
                             hintText: "Phone",
+                            hintStyle:  textRegular.copyWith(
+                              color: AppColor.black,
+                            ),
                           ),
                         ))
                       ],
                     ),
                   ),
-                  SpaceV(AppSize.h40),
+                  SpaceV(AppSize.h10),
                   Row(
                     children: [
                       Checkbox(
-                        value: false,
+                        value: check,
                         activeColor: AppColor.primaryColor,
                         checkColor: AppColor.textColor,
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          setState(() {
+                            check= value!;
+                          });
+                        },
                       ),
                       Text(
                         termCondition,
@@ -166,40 +176,52 @@ class _EnterMobileNUmberState extends State<EnterMobileNUmber> {
                       ),
                     ],
                   ),
+                  SpaceV(context.height*0.10),
                   AppButton(
                     continueButton,
-                    () async {
-                      await FirebaseAuth.instance.verifyPhoneNumber(
-                        phoneNumber: countryController.text + phoneNumber,
-                        verificationCompleted:
-                            (PhoneAuthCredential credential) async {
-                          // ANDROID ONLY!
+                        () async {
+                     if(phoneNumber.isNotEmpty&&phoneNumber.length>=9) {
+                       if(check) {
+                         await FirebaseAuth.instance.verifyPhoneNumber(
+                           phoneNumber: countryController.text + phoneNumber,
+                           verificationCompleted:
+                               (PhoneAuthCredential credential) async {
+                             // ANDROID ONLY!
 
-                          // Sign the user in (or link) with the auto-generated credential
-                          // await auth.signInWithCredential(credential);
-                        },
-                        verificationFailed: (FirebaseAuthException e) {
-                          if (e.code == 'invalid-phone-number') {
-                            Utility.showToast(
-                                msg: 'The provided phone number is not valid.');
-                          }
+                             // Sign the user in (or link) with the auto-generated credential
+                             // await auth.signInWithCredential(credential);
+                           },
+                           verificationFailed: (FirebaseAuthException e) {
+                             if (e.code == 'invalid-phone-number') {
+                               Utility.showToast(
+                                   msg: 'The provided phone number is not valid.');
+                             }
 
-                          // Handle other errors
-                        },
-                        codeSent: (String verificationId, int? resendToken) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => VerifyOtpScreen(
-                                        verify: verificationId,
-                                        mobile: phoneNumber,
-                                      )));
-                          // context.goNamed(
-                          //   'VerifyOtpScreen?verify=$verificationId',
-                          // );
-                        },
-                        codeAutoRetrievalTimeout: (String verificationId) {},
-                      );
+                             // Handle other errors
+                           },
+                           codeSent: (String verificationId, int? resendToken) {
+                             Navigator.push(
+                                 context,
+                                 MaterialPageRoute(
+                                     builder: (context) =>
+                                         VerifyOtpScreen(
+                                           verify: verificationId,
+                                           mobile: phoneNumber,
+                                         )));
+                             // context.goNamed(
+                             //   'VerifyOtpScreen?verify=$verificationId',
+                             // );
+                           },
+                           codeAutoRetrievalTimeout: (String verificationId) {},
+                         );
+                       }else{
+                         Utility.showToast(
+                             msg: 'Please Select checkbox');
+                       }
+                     }else{
+                       Utility.showToast(
+                           msg: 'Please fill 10 digit mobile number');
+                     }
                     },
                     isDisabled: false,
                   ),

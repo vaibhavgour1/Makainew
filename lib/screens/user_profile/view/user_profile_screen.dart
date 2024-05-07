@@ -2,13 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:makaihealth/api/retriveData.dart';
 import 'package:makaihealth/gen/assets.gen.dart';
 import 'package:makaihealth/utility/colors.dart';
 import 'package:makaihealth/utility/dimension.dart';
+import 'package:makaihealth/utility/sharedpref.dart';
 import 'package:makaihealth/utility/string_constants.dart';
 import 'package:makaihealth/utility/text_styles.dart';
 import 'package:makaihealth/widget/space_horizontal.dart';
 import 'package:makaihealth/widget/space_vertical.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PatientProfileScreen extends StatefulWidget {
   const PatientProfileScreen({super.key});
@@ -18,6 +21,26 @@ class PatientProfileScreen extends StatefulWidget {
 }
 
 class _PatientProfileScreenState extends State<PatientProfileScreen> {
+  String name='';
+  String mobileNumber='';
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+  getData() async {
+     mobileNumber = await SharedPref.getStringPreference(SharedPref.MOBILE);
+
+
+
+      retrieveData(mobileNumber, 'usersProfile').then((value){
+        setState(() {
+        name = value!['name'];
+
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -35,19 +58,19 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                     child: Column(
                       children: [
                         Image.asset(
-                          "assets/images/png/EditProfileImage.png",
+                          "assets/images/png/user-profile.png",
                           fit: BoxFit.contain,
                           // width:
                           //     MediaQuery.of(context).size.width * 0.14,
                         ),
                         SpaceV(AppSize.h10),
                         Text(
-                          sahilChaure,
+                          name,
                           style: textBold.copyWith(
                               fontSize: AppSize.sp18, color: AppColor.black),
                         ),
                         Text(
-                          sahilChaureEmail,
+                          mobileNumber,
                           style: textRegular.copyWith(
                               fontSize: AppSize.sp14, color: AppColor.black),
                         )
@@ -62,10 +85,11 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
+
                         children: [
                           GestureDetector(
                             onTap: () {
-                              context.go('/UserProfileHomeScreen');
+                              context.go('/DrugMedicineTabScreen');
                             },
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +97,7 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                                 Assets.images.svgs.profileLine.svg(),
                                 SpaceH(AppSize.w14),
                                 Text(
-                                  editProfileInformation,
+                                  editMedicalInformation,
                                   style: textRegular.copyWith(
                                       fontSize: AppSize.sp12,
                                       color: AppColor.black),
@@ -136,74 +160,74 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                               )
                             ],
                           ),
-                          SpaceV(AppSize.h12),
-                          GestureDetector(
-                            onTap: () {
-                              context.go('/MedicalConditionScreen');
-                            },
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Assets.images.svgs.translateLanguage.svg(),
-                                SpaceH(AppSize.w14),
-                                Text(
-                                  medicalCondition,
-                                  style: textRegular.copyWith(
-                                      fontSize: AppSize.sp12,
-                                      color: AppColor.black),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SpaceV(AppSize.h12),
-                          GestureDetector(
-                            onTap: () {
-                              context.go('/DoctorInfoScreen');
-                            },
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Assets.images.svgs.translateLanguage.svg(),
-                                SpaceH(AppSize.w14),
-                                Text(
-                                  medicinesName,
-                                  style: textRegular.copyWith(
-                                      fontSize: AppSize.sp12,
-                                      color: AppColor.black),
-                                ),
-                              ],
-                            ),
-                          ),
+                          //SpaceV(AppSize.h12),
+                          // GestureDetector(
+                          //   onTap: () {
+                          //     context.go('/MedicalConditionScreen');
+                          //   },
+                          //   child: Row(
+                          //     crossAxisAlignment: CrossAxisAlignment.start,
+                          //     children: [
+                          //       Assets.images.svgs.translateLanguage.svg(),
+                          //       SpaceH(AppSize.w14),
+                          //       Text(
+                          //         medicalCondition,
+                          //         style: textRegular.copyWith(
+                          //             fontSize: AppSize.sp12,
+                          //             color: AppColor.black),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
+                          // SpaceV(AppSize.h12),
+                          // GestureDetector(
+                          //   onTap: () {
+                          //     context.go('/DoctorInfoScreen');
+                          //   },
+                          //   child: Row(
+                          //     crossAxisAlignment: CrossAxisAlignment.start,
+                          //     children: [
+                          //       Assets.images.svgs.translateLanguage.svg(),
+                          //       SpaceH(AppSize.w14),
+                          //       Text(
+                          //         medicinesName,
+                          //         style: textRegular.copyWith(
+                          //             fontSize: AppSize.sp12,
+                          //             color: AppColor.black),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
                   ),
-                  SpaceV(AppSize.h10),
-                  Card(
-                    color: Colors.white,
-                    elevation: 4,
-                    shadowColor: AppColor.textColor,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Assets.images.svgs.securitmg.svg(),
-                              SpaceH(AppSize.w14),
-                              Text(
-                                security,
-                                style: textRegular.copyWith(
-                                    fontSize: AppSize.sp12,
-                                    color: AppColor.black),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  // SpaceV(AppSize.h10),
+                  // Card(
+                  //   color: Colors.white,
+                  //   elevation: 4,
+                  //   shadowColor: AppColor.textColor,
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.all(16.0),
+                  //     child: Column(
+                  //       children: [
+                  //         Row(
+                  //           crossAxisAlignment: CrossAxisAlignment.start,
+                  //           children: [
+                  //             Assets.images.svgs.securitmg.svg(),
+                  //             SpaceH(AppSize.w14),
+                  //             Text(
+                  //               security,
+                  //               style: textRegular.copyWith(
+                  //                   fontSize: AppSize.sp12,
+                  //                   color: AppColor.black),
+                  //             )
+                  //           ],
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   SpaceV(AppSize.h10),
                   Card(
                     color: Colors.white,
@@ -215,30 +239,35 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                       ),
                       child: Column(
                         children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Assets.images.svgs.contactsLine.svg(),
-                              SpaceH(AppSize.w14),
-                              Text(
-                                helpSupport,
-                                style: textRegular.copyWith(
-                                    fontSize: AppSize.sp12,
-                                    color: AppColor.black),
-                              )
-                            ],
-                          ),
-                          SpaceV(AppSize.h12),
+                          // Row(
+                          //   crossAxisAlignment: CrossAxisAlignment.start,
+                          //   children: [
+                          //     Assets.images.svgs.contactsLine.svg(),
+                          //     SpaceH(AppSize.w14),
+                          //     Text(
+                          //       helpSupport,
+                          //       style: textRegular.copyWith(
+                          //           fontSize: AppSize.sp12,
+                          //           color: AppColor.black),
+                          //     )
+                          //   ],
+                          // ),
+                          // SpaceV(AppSize.h12),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Assets.images.svgs.chatQuoteLine.svg(),
                               SpaceH(AppSize.w14),
-                              Text(
-                                contactUs,
-                                style: textRegular.copyWith(
-                                    fontSize: AppSize.sp12,
-                                    color: AppColor.black),
+                              InkWell(
+                                onTap: (){
+                                  _launchURL('https://www.makaicare.com/');
+                                },
+                                child: Text(
+                                  contactUs,
+                                  style: textRegular.copyWith(
+                                      fontSize: AppSize.sp12,
+                                      color: AppColor.black),
+                                ),
                               ),
                             ],
                           ),
@@ -247,7 +276,7 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Assets.images.svgs.lock2Line.svg(),
-                              SpaceV(AppSize.h14),
+                              SpaceH(AppSize.w14),
                               Text(
                                 privacyPolicy,
                                 style: textRegular.copyWith(
@@ -273,7 +302,7 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
           left: AppSize.w16,
           child: GestureDetector(
               onTap: () {
-                context.go('/PatientInfoFormScreen');
+                context.go('/HomeView');
               },
               child:
                   const Icon(Icons.arrow_back, color: AppColor.appbarBgColor)),
@@ -299,5 +328,14 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
         )
       ],
     );
+  }
+  Future<void> _launchURL(String urlString) async {
+    final Uri url = Uri.parse(urlString);
+
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $urlString';
+    }
   }
 }

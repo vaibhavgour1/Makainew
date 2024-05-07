@@ -105,6 +105,7 @@ class AppSize {
   static final double sp20 = disableSizeUtils ? 20 : 20.sp;
   static final double sp22 = disableSizeUtils ? 22 : 22.sp;
   static final double sp24 = disableSizeUtils ? 24 : 24.sp;
+  static final double sp26 = disableSizeUtils ? 26 : 26.sp;
   static final double sp28 = disableSizeUtils ? 28 : 28.sp;
   static final double sp30 = disableSizeUtils ? 30 : 30.sp;
   static final double sp32 = disableSizeUtils ? 32 : 32.sp;

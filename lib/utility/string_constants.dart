@@ -91,13 +91,13 @@ const nEWAPPUPDATEISHERE="NEW APP UPDATE IS HERE !";
 const sahilChaure="sahil chaure";
 const sahilChaureEmail="sahilchaurr1999@gmai.com| +91 234 ";
 const privacyPolicy="Privacy policy";
-const contactUs="Contact us";
+const contactUs="manav@makaicare.com";
 const helpSupport="Help & Support";
 const security="Security";
 const language="Language";
 const english="English";
 const on="ON";
-const editProfileInformation="Edit profile information";
+const editMedicalInformation="Edit Medical Information";
 
 
 

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:makaihealth/utility/dimension.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Gets Cognigy.AI message information.
@@ -70,6 +72,7 @@ ChatMessage? processCognigyMessage(dynamic cognigyResponse) {
       return ChatMessage(type: 'list', text: '', data: {'listItems': listItems, 'listButtons': listButtons});
     }
   }
+  return null;
   // return ChatMessage(type: 'text', text: 'Error',data:  null);
 }
 
@@ -89,4 +92,36 @@ class ChatMessage {
   String? sender;
 
   ChatMessage({this.type = '', this.text = '', this.data, this.sender = 'bot'});
+  factory ChatMessage.fromJson(Map<String, dynamic> json) {
+    return ChatMessage(
+      type: json['type'] ?? '',
+      text: json['text'] ?? '',
+      data: json['data'],
+      sender: json['sender'] ?? 'bot',
+    );
+  }
+}
+class CustomCardTile extends StatelessWidget {
+  final String text;
+  final TextStyle textStyle;
+
+  const CustomCardTile({super.key, required this.text, required this.textStyle});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 5.0, // Adjust the elevation as needed
+      color: Colors.white,
+      margin: EdgeInsets.only(right: AppSize.w100,left: AppSize.w10,top:  AppSize.w10),
+      // Set the background color to white
+      child: ListTile(
+        title: Text(
+          text,
+          style: textStyle,
+          maxLines: 6,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+    );
+  }
 }

@@ -33,11 +33,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               },
               children: const [
                 OnboardingPage(
-                  title: 'welcome track your personal health',
+                  title: 'Experience personalized medicine like never before.',
                   image: 'assets/images/svgs/amico.svg',
                 ),
                 OnboardingPage(
-                  title: 'Monitor your helath  ',
+                  title: 'Monitor your condition Anytime.Anywhere  ',
                   image: 'assets/images/svgs/rafiki.svg',
                 ),
               ],
@@ -113,7 +113,7 @@ class OnboardingPage extends StatelessWidget {
           title!,
           textAlign: TextAlign.center,
           style: textSemiBold.copyWith(
-              fontSize: AppSize.sp32, color: AppColor.black),
+              fontSize: AppSize.sp26, color: AppColor.black),
         ),
         const SizedBox(height: 8.0),
       ],

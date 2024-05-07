@@ -186,29 +186,29 @@ class _LoginwithEmailScreenState extends State<LoginwithEmailScreen> {
 
                     SpaceV(AppSize.h40),
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          dontHaveanAccount,
-                          style: textRegular.copyWith(
-                              color: AppColor.textColorSecondary,
-                              fontSize: AppSize.sp12,
-                              fontWeight: FontWeight.w400),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Text(
-                          signup,
-                          style: textMedium.copyWith(
-                              color: AppColor.textHintColor,
-                              fontSize: AppSize.sp12),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   crossAxisAlignment: CrossAxisAlignment.center,
+                    //   children: [
+                    //     Text(
+                    //       dontHaveanAccount,
+                    //       style: textRegular.copyWith(
+                    //           color: AppColor.textColorSecondary,
+                    //           fontSize: AppSize.sp12,
+                    //           fontWeight: FontWeight.w400),
+                    //       maxLines: 1,
+                    //       overflow: TextOverflow.ellipsis,
+                    //     ),
+                    //     Text(
+                    //       signup,
+                    //       style: textMedium.copyWith(
+                    //           color: AppColor.textHintColor,
+                    //           fontSize: AppSize.sp12),
+                    //       maxLines: 1,
+                    //       overflow: TextOverflow.ellipsis,
+                    //     ),
+                    //   ],
+                    // ),
                   ],
                 ),
               ),
