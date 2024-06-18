@@ -34,27 +34,27 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.6
+  cupertino_icons: ^1.0.8
   # adapting screen Sizes
-  flutter_screenutil: ^5.9.0
+  flutter_screenutil: ^5.9.3
   #local methods Assign
   intl: ^0.19.0
   #log the outputs
-  logger: ^2.2.0
+  logger: ^2.3.0
   #Lottie animation
-  lottie: ^3.1.0
+  lottie: ^3.1.2
   #launching a URL
-  url_launcher: ^6.2.6
+  url_launcher: ^6.3.0
   #app Routing
-  go_router: ^13.2.4
+  go_router: ^14.1.4
   #use svg images
   flutter_svg: ^2.0.10+1
   #delayed message or widget
   delayed_display: ^2.0.0
   #chipList
-  chip_list: ^2.4.4+8
+  chip_list: ^3.0.0
   #flutter toast for showing intl_messages:
-  fluttertoast: ^8.2.4
+  fluttertoast: ^8.2.6
   #dio api calling and exception handling
   dio:
 
@@ -64,27 +64,27 @@ dependencies:
   dots_indicator: ^3.0.0
   #textFeild
   intl_phone_field: ^3.2.0
-  socket_io_client: ^2.0.3+1
+  socket_io_client: 2.0.3+1
   flutter_simple_dependency_injection: ^2.0.0
   uuid: ^4.4.0
   #otp textfield
   flutter_otp_text_field: ^1.1.3+2
   #image icker
-  image_picker: ^1.0.8
+#  image_picker: ^1.1.1
   #image croper
-  image_cropper: ^5.0.1
+ # image_cropper: ^6.0.0
   #chart
   # d_chart: ^2.6.9
   pie_chart: ^5.4.0
-  fl_chart: ^0.67.0
+  fl_chart: ^0.68.0
   basic_utils: ^5.7.0
-  firebase_core: ^2.29.0
-  firebase_auth: ^4.19.1
-  cloud_firestore: ^4.16.1
+  firebase_core: ^3.0.0
+  firebase_auth: ^5.0.0
+  cloud_firestore: ^5.0.0
   #Save data In app
   shared_preferences:
   bubble:
-
+  web_socket_channel:
   flutter_chat_bubble:
 
 #syncfusion_flutter_charts: ^25.1.37
@@ -108,9 +108,10 @@ dev_dependencies:
   flutter_gen_runner: ^5.4.0
   flutter_launcher_icons: ^0.13.1
   freezed: ^2.5.2
-  json_serializable: ^6.7.1
+  json_serializable: ^6.8.0
   very_good_analysis: ^5.1.0
-  file_picker: ^8.0.0+1
+  file_picker: ^8.0.3
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

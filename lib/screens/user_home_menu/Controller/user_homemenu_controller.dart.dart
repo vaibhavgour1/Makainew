@@ -2,12 +2,10 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:get/get.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
 
 class UserHomeMenuController extends GetxController {
   var isLoading = false.obs;
-  XFile? image;
+  //XFile? image;
   Rx<int> selectedPositionIndex = 0.obs;
   Uint8List? imageFile;
   String? imagePath = '';
@@ -25,31 +23,31 @@ class UserHomeMenuController extends GetxController {
     update(); // Notify listeners of the change
   }
 
-  Future<void> pickImage() async {
-    try {
-      final image = await ImagePicker().pickImage(
-        source: ImageSource.gallery, // or ImageSource.camera for the camera
-      );
+  // Future<void> pickImage() async {
+  //   try {
+  //     // final image = await ImagePicker().pickImage(
+  //     //   source: ImageSource.gallery, // or ImageSource.camera for the camera
+  //     // );
+  //
+  //     if (image != null) {
+  //       File? img = File(image.path);
+  //       img = await cropimage(imageFile: img);
+  //       imagePath = img!.path;
+  //       imageFile = await img.readAsBytes();
+  //
+  //       print(imagePath);
+  //       update();
+  //     }
+  //   } catch (e) {
+  //     imageFile = null;
+  //     update();
+  //   }
+  // }
 
-      if (image != null) {
-        File? img = File(image.path);
-        img = await cropimage(imageFile: img);
-        imagePath = img!.path;
-        imageFile = await img.readAsBytes();
-
-        print(imagePath);
-        update();
-      }
-    } catch (e) {
-      imageFile = null;
-      update();
-    }
-  }
-
-  Future<File?> cropimage({required File imageFile}) async {
-    CroppedFile? croppedImage =
-    await ImageCropper().cropImage(sourcePath: imageFile.path);
-    if (croppedImage == null) return null;
-    return File(croppedImage.path);
-  }
+  // Future<File?> cropimage({required File imageFile}) async {
+  //   CroppedFile? croppedImage =
+  //   await ImageCropper().cropImage(sourcePath: imageFile.path);
+  //   if (croppedImage == null) return null;
+  //   return File(croppedImage.path);
+  // }
 }

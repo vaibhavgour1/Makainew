@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:makaihealth/api/logger_interceptors.dart';
+import 'package:makaihealth/screens/home/response/chat_response.dart';
 import 'package:makaihealth/utility/dimension.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -35,7 +37,7 @@ ChatMessage? processCognigyMessage(dynamic cognigyResponse) {
         cognigyResponse['data']['data']['_cognigy']['_webchat']['message']['attachment']['payload']['template_type'] ==
             'generic') {
       List galleryItems =
-          cognigyResponse['data']['data']['_cognigy']['_webchat']['message']['attachment']['payload']['elements'];
+      cognigyResponse['data']['data']['_cognigy']['_webchat']['message']['attachment']['payload']['elements'];
 
       return ChatMessage(type: 'gallery', text: '', data: galleryItems);
     }
@@ -53,9 +55,9 @@ ChatMessage? processCognigyMessage(dynamic cognigyResponse) {
         cognigyResponse['data']['data']['_cognigy']['_webchat']['message']['attachment']['payload']['template_type'] ==
             'button') {
       String buttonText =
-          cognigyResponse['data']['data']['_cognigy']['_webchat']['message']['attachment']['payload']['text'];
+      cognigyResponse['data']['data']['_cognigy']['_webchat']['message']['attachment']['payload']['text'];
       List buttons =
-          cognigyResponse['data']['data']['_cognigy']['_webchat']['message']['attachment']['payload']['buttons'];
+      cognigyResponse['data']['data']['_cognigy']['_webchat']['message']['attachment']['payload']['buttons'];
 
       return ChatMessage(type: 'buttons', text: buttonText, data: buttons);
     }
@@ -65,9 +67,9 @@ ChatMessage? processCognigyMessage(dynamic cognigyResponse) {
         cognigyResponse['data']['data']['_cognigy']['_webchat']['message']['attachment']['payload']['template_type'] ==
             'list') {
       List listItems =
-          cognigyResponse['data']['data']['_cognigy']['_webchat']['message']['attachment']['payload']['elements'];
+      cognigyResponse['data']['data']['_cognigy']['_webchat']['message']['attachment']['payload']['elements'];
       List listButtons =
-          cognigyResponse['data']['data']['_cognigy']['_webchat']['message']['attachment']['payload']['buttons'];
+      cognigyResponse['data']['data']['_cognigy']['_webchat']['message']['attachment']['payload']['buttons'];
 
       return ChatMessage(type: 'list', text: '', data: {'listItems': listItems, 'listButtons': listButtons});
     }
@@ -75,28 +77,28 @@ ChatMessage? processCognigyMessage(dynamic cognigyResponse) {
   return null;
   // return ChatMessage(type: 'text', text: 'Error',data:  null);
 }
-
 // method to open a url
-LaunchUrl(String url) async {
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
-  }
-}
+// LaunchUrl(String url) async {
+//   if (await canLaunch(url)) {
+//     await launch(url);
+//   } else {
+//     throw 'Could not launch $url';
+//   }
+// }
 
 class ChatMessage {
-  final String type;
-  final String text;
+  final String? type;
+  final String? text;
   final dynamic data;
   String? sender;
 
   ChatMessage({this.type = '', this.text = '', this.data, this.sender = 'bot'});
+
   factory ChatMessage.fromJson(Map<String, dynamic> json) {
     return ChatMessage(
-      type: json['type'] ?? '',
-      text: json['text'] ?? '',
-      data: json['data'],
+      type: json['type'] ?? 'text',
+      text: json['text'] ?? 'text',
+      data: json['data']??{},
       sender: json['sender'] ?? 'bot',
     );
   }

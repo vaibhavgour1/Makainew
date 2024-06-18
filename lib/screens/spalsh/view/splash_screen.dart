@@ -1,14 +1,15 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:go_router/go_router.dart';
 import 'package:makaihealth/gen/assets.gen.dart';
 import 'package:makaihealth/utility/colors.dart';
+import 'package:makaihealth/utility/config.dart';
 import 'package:makaihealth/utility/dimension.dart';
 import 'package:makaihealth/utility/sharedpref.dart';
-import 'package:makaihealth/utility/socket.io.dart';
 import 'package:makaihealth/utility/text_styles.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:uuid/uuid.dart';
@@ -36,13 +37,18 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     log('Connected--->S');
     // IO.Socket socket =
-    //     IO.io('https://endpoint-trial.cognigy.ai/', <String, dynamic>{
+    //     IO.io('https://endpoint-trial.cognigy.ai/',
+    //         <String, dynamic>{
     //   'transports': ['websocket'],
-    //   //   'autoConnect': false,
-    //   'extraHeaders': {
-    //     'URLToken':
-    //         'bafebec090f608f17d1a8878cae34bf5d09099df639919002ee75de038c64f57'
-    //   }
+    //     'autoConnect': false,
+    //       'query': {
+    //         'sessionId': Uri.encodeComponent(sessionId),
+    //         'urlToken': Uri.encodeComponent(urlToken),
+    //         'userId': Uri.encodeComponent(userId),
+    //         'testMode': 'true',
+    //         'emitWithAck': 'true' ,
+    //       },
+    //
     // });
     // socket.connect();
     //
@@ -51,24 +57,19 @@ class _SplashScreenState extends State<SplashScreen> {
     //   log('Connected socket==>$userId');
     //   log('Connected socket==>$sessionId');
     //   socket.emit('processInput', {
-    //     'URLToken':
-    //         'bafebec090f608f17d1a8878cae34bf5d09099df639919002ee75de038c64f57',
-    //     'text': "vaibhav",
+    //     'URLToken': urlToken,
+    //     'text': 'vaibhav',
     //     'userId': userId,
     //     'sessionId': sessionId,
     //     'channel': 'flutter',
     //     'source': 'device',
-    //     "data": {
-    //       'user_profile': 'AppString.userMobile)',
-    //       'email': 'vgour307@gmail.com',
-    //       'name': 'vaibhav',
-    //       'base': 'mp4',
-    //       'url': '',
-    //       'slug': 'slug',
-    //       'patientId': userId,
-    //       'patientConditionId': 'patientConditionId',
+    //     'data': {
+    //       'Patient': {},
+    //       'Medicine': {},
+    //       'Condition': {},
     //     },
     //   });
+    //
     //   log('Connected socket');
     // });
     //
@@ -97,12 +98,12 @@ login() async {
     );
   }
 }
-  Future<void> socketConnection() async {
-    log('socketConnection 00');
-    // if (_homeController.userProfileModel.value.data?.profile?.id?.isNotEmpty ?? false) {
-
-    SocketService.createSocketConnection();
-  }
+  // Future<void> socketConnection() async {
+  //   log('socketConnection 00');
+  //   // if (_homeController.userProfileModel.value.data?.profile?.id?.isNotEmpty ?? false) {
+  //
+  //   SocketService.createSocketConnection();
+  // }
 
   @override
   void dispose() {

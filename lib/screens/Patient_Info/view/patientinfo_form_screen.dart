@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -37,11 +39,13 @@ class _PatientInfoFormScreenState extends State<PatientInfoFormScreen> {
   }
   checkProfile() async {
     retrieveData(await SharedPref.getStringPreference(SharedPref.MOBILE)).then((value){
+      value.logD;if(value!=null){
+      Timer(
+        const Duration(milliseconds: 1),
+            () =>    context.go('/HomeView'),
+      );
 
-    value.logD;if(value!=null){
-      context.go('/HomeView');
-    }
-    });
+    }});
   }
   @override
   Widget build(BuildContext context) {

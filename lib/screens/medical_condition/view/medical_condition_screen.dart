@@ -21,24 +21,20 @@ class MedicalConditionScreen extends StatefulWidget {
 
 class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
   bool showMyCondition = false;
-  bool showTextfieldButton = false,
-      showPastDisease = false,
-      showPastSurgery = false;
+  bool showTextfieldButton = false;
+  bool showPastDisease = false;
+  bool showPastSurgery = false;
   Map<String, String> medicalConditionData = {};
   final TextEditingController _searchController = TextEditingController();
   final TextEditingController pastDiseaseController = TextEditingController();
   final TextEditingController pastSurgeryController = TextEditingController();
-  String search = '',
-      pastDisease = '',
-      pastSurgery = '';
-  String putData = '';
-
+  String search = '';
+  String pastDisease = '';
+  String pastSurgery = '';
   final List<Map<String, String>> addmymedicalCondition = [];
 
   @override
   Widget build(BuildContext context) {
-    String filterText = '';
-
     return Stack(
       children: [
         Scaffold(
@@ -51,70 +47,59 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // SpaceV(AppSize.h40),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         GestureDetector(
-                            onTap: () {
-                              context.go('/PatientProfileScreen');
-                            },
-                            child: const Icon(Icons.arrow_back,
-                                color: AppColor.appbarBgColor)),
+                          onTap: () {
+                            context.go('/PatientProfileScreen');
+                          },
+                          child: const Icon(
+                            Icons.arrow_back,
+                            color: AppColor.appbarBgColor,
+                          ),
+                        ),
                         SpaceH(AppSize.w40),
                         Text(
                           medicalCondition,
                           style: textSemiBold.copyWith(
-                              color: AppColor.black, fontSize: AppSize.sp22),
+                            color: AppColor.black,
+                            fontSize: AppSize.sp22,
+                          ),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
-                  //  SpaceV(AppSize.h40),
+                    SpaceV(AppSize.h40),
                     if (showMyCondition)
+                      SizedBox(
+                        height: (MediaQuery.of(context).size.width * 0.40),
+                        child: ListView.builder(
+                          shrinkWrap: true,
 
-                          // Text(
-                          //   myCondition,
-                          //   style: textSemiBold.copyWith(
-                          //       color: AppColor.black, fontSize: AppSize.sp22),
-                          //   maxLines: 1,
-                          //   overflow: TextOverflow.ellipsis,
-                          //   textAlign: TextAlign.start,
-                          // ),
-                          // SpaceV(AppSize.h10),
-                          SizedBox(
-                            height:MediaQuery.of(context).size.width * 0.14,
-                            child: ListView.builder(
-                              padding: EdgeInsets.zero,
-                              itemCount: addmymedicalCondition.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                var medicalCon = addmymedicalCondition[index];
-
-                                // if (filterText.isEmpty ||
-                                //     medicalCon["name"]!
-                                //         .toLowerCase()
-                                //         .contains(filterText)) {
-                                return ListTile(
-                                  tileColor: AppColor.chatBlueBgColor.withOpacity(.3),
-                                  leading: Assets
-                                      .images.svgs.medicalconditionMyconImg
-                                      .svg(),
-                                  iconColor: AppColor.black,
-                                  title: Text(
-                                    medicalCon["name"]!,
-                                    style: textBold.copyWith(
-                                        fontSize: AppSize.sp16,
-                                        color: AppColor.black),
-                                  ),
-                                  onTap: () {},
-                                );
-                                // } else {
-                                //   return Container();
-                                // }
-                              },
-                            ),
-                          ),
-
+                          padding: EdgeInsets.zero,
+                          itemCount: addmymedicalCondition.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            var medicalCon = addmymedicalCondition[index];
+                            return ListTile(
+                              tileColor:
+                              AppColor.chatBlueBgColor.withOpacity(.3),
+                              leading:
+                              Assets.images.svgs.medicalconditionMyconImg
+                                  .svg(),
+                              iconColor: AppColor.black,
+                              title: Text(
+                                medicalCon["name"]!,
+                                style: textBold.copyWith(
+                                  fontSize: AppSize.sp16,
+                                  color: AppColor.black,
+                                ),
+                              ),
+                              onTap: () {},
+                            );
+                          },
+                        ),
+                      ),
                     Center(
                       child: Text(
                         addCondition,
@@ -148,15 +133,18 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                             });
                           },
                           decoration: const InputDecoration(
-                              hintText: "Add your condition",
-                              hintStyle: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14.0,
-                                color: Colors.black,
-                              ),
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 4, horizontal: 8)),
+                            hintText: "Add your condition",
+                            hintStyle: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14.0,
+                              color: Colors.black,
+                            ),
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: 4,
+                              horizontal: 8,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -166,13 +154,8 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                             () {
                           setState(() {
                             showMyCondition = true;
-
-                            addmymedicalCondition.add({
-                              "name": search,
-                            });
-
+                            addmymedicalCondition.add({"name": search});
                             _searchController.clear();
-
                             showTextfieldButton = false;
                           });
                         },
@@ -180,19 +163,18 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                       ),
                     if (pastDisease.isNotEmpty)
                       ListTile(
-                        leading: Assets
-                            .images.svgs.medicalconditionMyconImg
-                            .svg(),
+                        leading:
+                        Assets.images.svgs.medicalconditionMyconImg.svg(),
                         iconColor: AppColor.black,
                         title: Text(
                           pastDisease,
                           style: textBold.copyWith(
-                              fontSize: AppSize.sp16,
-                              color: AppColor.black),
+                            fontSize: AppSize.sp16,
+                            color: AppColor.black,
+                          ),
                         ),
                         onTap: () {},
-                      )
-                    ,
+                      ),
                     GestureDetector(
                       onTap: () {
                         setState(() {
@@ -224,7 +206,9 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                               color: Colors.black,
                             ),
                             contentPadding: EdgeInsets.symmetric(
-                                vertical: 4, horizontal: 8),
+                              vertical: 4,
+                              horizontal: 8,
+                            ),
                             border: InputBorder.none,
                           ),
                         ),
@@ -236,10 +220,7 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                             () {
                           setState(() {
                             showPastDisease = true;
-
                             pastDiseaseController.clear();
-
-
                             showPastDisease = false;
                           });
                         },
@@ -247,20 +228,18 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                       ),
                     if (pastSurgery.isNotEmpty)
                       ListTile(
-                        leading: Assets
-                            .images.svgs.medicalconditionMyconImg
-                            .svg(),
+                        leading:
+                        Assets.images.svgs.medicalconditionMyconImg.svg(),
                         iconColor: AppColor.black,
                         title: Text(
                           pastSurgery,
                           style: textBold.copyWith(
-                              fontSize: AppSize.sp16,
-                              color: AppColor.black),
+                            fontSize: AppSize.sp16,
+                            color: AppColor.black,
+                          ),
                         ),
                         onTap: () {},
                       ),
-
-
                     GestureDetector(
                       onTap: () {
                         setState(() {
@@ -285,15 +264,17 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                             });
                           },
                           decoration: const InputDecoration(
-                              hintText: "Add your Past Surgery",
-                              hintStyle: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14.0,
-                                color: Colors.black,
-                              ),
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 4, horizontal: 8)
+                            hintText: "Add your Past Surgery",
+                            hintStyle: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14.0,
+                              color: Colors.black,
+                            ),
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: 4,
+                              horizontal: 8,
+                            ),
                           ),
                         ),
                       ),
@@ -304,113 +285,29 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                             () {
                           setState(() {
                             showPastSurgery = true;
-
                             pastSurgeryController.clear();
-
-
                             showPastSurgery = false;
                           });
                         },
                         isDisabled: false,
                       ),
                     SpaceV(AppSize.h20),
-
-                    SpaceV(AppSize.h20),
-                    // if(showMyCondition)
-                    // SizedBox(
-                    //   height: MediaQuery.of(context).size.height * 0.27,
-                    //   child: ListView.builder(
-                    //     itemCount: addmedicalCondition.length,
-                    //     itemBuilder: (BuildContext context, int index) {
-                    //       var medicalCon = addmedicalCondition[index];
-                    //       return Column(
-                    //         children: [
-                    //           ListTile(
-                    //             leading: Assets.images.svgs.medicalCon.svg(),
-                    //             iconColor: AppColor.black,
-                    //             title: Text(
-                    //               medicalCon["name"]!,
-                    //               style: textBold.copyWith(
-                    //                 fontSize: AppSize.sp14,
-                    //                 color: AppColor.black,
-                    //               ),
-                    //             ),
-                    //             onTap: () {
-                    //                setState(() {
-                    //                 putData = medicalCon["name"]!;
-
-                    //                 addmymedicalCondition.add({
-                    //                   "name": medicalCon["name"]!,
-                    //                 });
-                    //                 addmymedicalCondition.add({
-                    //                   "name": search,
-                    //                 });
-                    //                 addmedicalCondition.add({
-                    //                   "name": search,
-                    //                 });
-                    //                 _searchController.clear();
-                    //                });
-                    //             },
-                    //           ),
-                    //         ],
-                    //       );
-                    //     },
-                    //   ),
-                    // ),
-                    SpaceV(AppSize.h40),
                   ],
                 ),
               ),
             ),
           ),
         ),
-        if (showMyCondition == false)
-          Positioned(
-            bottom: MediaQuery
-                .of(context)
-                .size
-                .height * 0.02,
-            left: MediaQuery
-                .of(context)
-                .size
-                .width * 0.07,
-            right: MediaQuery
-                .of(context)
-                .size
-                .width * 0.07,
-            child: AppButton(
-              selectCondition,
-                  () {
-                setState(() {
-                  showMyCondition = false;
-                });
-              },
-              isDisabled: false,
-            ),
-          )
-        else
-          Positioned(
-            bottom: MediaQuery
-                .of(context)
-                .size
-                .height * 0.02,
-            left: MediaQuery
-                .of(context)
-                .size
-                .width * 0.07,
-            right: MediaQuery
-                .of(context)
-                .size
-                .width * 0.07,
-            child: AppButton(
-              submitButton,
-                  () async {
-                addmymedicalCondition
-                    .toString()
-                    .logD;
+        Positioned(
+          bottom: MediaQuery.of(context).size.height * 0.02,
+          left: MediaQuery.of(context).size.width * 0.07,
+          right: MediaQuery.of(context).size.width * 0.07,
+          child: AppButton(
+            showMyCondition ? submitButton : selectCondition,
+                () async {
+              if (showMyCondition) {
                 List<String> valuesList = addmymedicalCondition
-                    .map((map) => map.values)
-                    .expand((values) => values)
+                    .map((map) => map["name"]!)
                     .toList();
                 DateTime now = DateTime.now();
                 String timestamp = now.microsecondsSinceEpoch.toString();
@@ -418,27 +315,29 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                   showTextfieldButton = false;
                   showMyCondition = false;
                 });
-                pastSurgeryController.text = pastDisease;
-                pastDiseaseController.text = pastDisease;
-                medicalConditionData['ConditionType'] = valuesList.toString();
-                medicalConditionData['PastDisease'] = pastDisease.toString();
-                medicalConditionData['SurgeryInformation'] =
-                    pastSurgery.toString();
-                medicalConditionData['ConditionId'] = timestamp.toString();
-                storeData(
-                    await SharedPref.getStringPreference(SharedPref.MOBILE),
-                    medicalConditionData); //  context.go('/PatientProfileScreen');
+                medicalConditionData['ConditionType'] = valuesList.join(', ');
+                medicalConditionData['PastDisease'] = pastDisease;
+                medicalConditionData['SurgeryInformation'] = pastSurgery;
+                medicalConditionData['ConditionId'] = timestamp;
+                await storeData(
+                  await SharedPref.getStringPreference(SharedPref.MOBILE),
+                  medicalConditionData,
+                );
                 retrieveData(
-                    await SharedPref.getStringPreference(SharedPref.MOBILE))
-                    .then((value) {
+                  await SharedPref.getStringPreference(SharedPref.MOBILE),
+                ).then((value) {
                   value.logD;
                   context.go('/HomeView');
                 });
-                // context.go('/PatientProfileScreen');
-              },
-              isDisabled: false,
-            ),
-          )
+              } else {
+                setState(() {
+                  showMyCondition = true;
+                });
+              }
+            },
+            isDisabled: false,
+          ),
+        ),
       ],
     );
   }
@@ -450,9 +349,7 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
           .doc(mobileNumber)
           .get();
       if (snapshot.exists) {
-        snapshot
-            .data()
-            .logD;
+        snapshot.data().logD;
         return snapshot.data() as Map<String, dynamic>;
       } else {
         ('No data found for mobile number: $mobileNumber').logD;
@@ -464,7 +361,7 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
     }
   }
 
-  void storeData(String mobileNumber, Map<String, dynamic> data) async {
+  Future<void> storeData(String mobileNumber, Map<String, dynamic> data) async {
     try {
       await FirebaseFirestore.instance
           .collection('medicalCondition')
