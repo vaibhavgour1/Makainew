@@ -109,7 +109,51 @@ class _PatientInfoFormScreenState extends State<PatientInfoFormScreen> {
                             fontWeight: FontWeight.w500),
                         keyboardType: TextInputType.emailAddress,
                       ),
+                      SpaceV(AppSize.h20),
+                      AppFormTextField(
+                        label: 'Email',
+                        hint: 'Email',
+                        controller:
+                        _patientInfoController.emailController.value,
 
+                        validators: (value) {
+                          if (_patientInfoController
+                              .nameController.value.text.isEmpty) {
+                            return 'Enter Name';
+                          }
+                          return null; // Return null if validation passes
+                        },
+                        textStyle: textRegular.copyWith(
+                            fontSize: AppSize.sp12,
+                            color: AppColor.colorHint,
+                            fontWeight: FontWeight.w500),
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                      SpaceV(AppSize.h20),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            right:
+                            8.0), // Adjust spacing between fields as needed
+                        child: AppFormTextField(
+                          label: 'age',
+                          hint: 'age',
+                          controller:
+                          _patientInfoController.ageController.value,
+                          validators: (value) {
+                            if (_patientInfoController
+                                .ageController.value.text.isEmpty) {
+                              return 'Enter Your age';
+                            }
+                            return null; // Return null if validation passes
+                          },
+                          textStyle: textRegular.copyWith(
+                            fontSize: AppSize.sp12,
+                            color: AppColor.colorHint,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          keyboardType: TextInputType.emailAddress,
+                        ),
+                      ),
                       SpaceV(AppSize.h20),
                       Row(
                         children: [
@@ -182,60 +226,60 @@ class _PatientInfoFormScreenState extends State<PatientInfoFormScreen> {
                       ),
 
                       SpaceV(AppSize.h20),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  right:
-                                      8.0), // Adjust spacing between fields as needed
-                              child: AppFormTextField(
-                                label: 'Weight',
-                                hint: 'Weight',
-                                controller:
-                                    _patientInfoController.weightController.value,
-                                validators: (value) {
-                                  if (_patientInfoController
-                                      .weightController.value.text.isEmpty) {
-                                    return 'Enter weight';
-                                  }
-                                  return null; // Return null if validation passes
-                                },
-                                textStyle: textRegular.copyWith(
-                                  fontSize: AppSize.sp12,
-                                  color: AppColor.colorHint,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                keyboardType: TextInputType.number,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: AppFormTextField(
-                                label: 'Height',
-                                hint: 'Height',
-                                controller:
-                                    _patientInfoController.heightController.value,
-                                validators: (value) {
-                                  if (_patientInfoController
-                                      .heightController.value.text.isEmpty) {
-                                    return 'Enter height';
-                                  }
-                                  return null; // Return null if validation passes
-                                },
-                                textStyle: textRegular.copyWith(
-                                  fontSize: AppSize.sp12,
-                                  color: AppColor.colorHint,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                keyboardType: TextInputType.number,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //       child: Padding(
+                      //         padding: const EdgeInsets.only(
+                      //             right:
+                      //                 8.0), // Adjust spacing between fields as needed
+                      //         child: AppFormTextField(
+                      //           label: 'Weight',
+                      //           hint: 'Weight',
+                      //           controller:
+                      //               _patientInfoController.weightController.value,
+                      //           validators: (value) {
+                      //             if (_patientInfoController
+                      //                 .weightController.value.text.isEmpty) {
+                      //               return 'Enter weight';
+                      //             }
+                      //             return null; // Return null if validation passes
+                      //           },
+                      //           textStyle: textRegular.copyWith(
+                      //             fontSize: AppSize.sp12,
+                      //             color: AppColor.colorHint,
+                      //             fontWeight: FontWeight.w500,
+                      //           ),
+                      //           keyboardType: TextInputType.number,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     Expanded(
+                      //       child: Padding(
+                      //         padding: const EdgeInsets.only(left: 8.0),
+                      //         child: AppFormTextField(
+                      //           label: 'Height',
+                      //           hint: 'Height',
+                      //           controller:
+                      //               _patientInfoController.heightController.value,
+                      //           validators: (value) {
+                      //             if (_patientInfoController
+                      //                 .heightController.value.text.isEmpty) {
+                      //               return 'Enter height';
+                      //             }
+                      //             return null; // Return null if validation passes
+                      //           },
+                      //           textStyle: textRegular.copyWith(
+                      //             fontSize: AppSize.sp12,
+                      //             color: AppColor.colorHint,
+                      //             fontWeight: FontWeight.w500,
+                      //           ),
+                      //           keyboardType: TextInputType.number,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
 
                       SpaceV(AppSize.h40),
                     ],
@@ -352,8 +396,9 @@ class _PatientInfoFormScreenState extends State<PatientInfoFormScreen> {
                           profileData['name']=_patientInfoController.nameController.value.text;
                           profileData['gender']=_patientInfoController.genderController.value.text;
                           profileData['dob']=_patientInfoController.birthdateController.value.text;
-                          profileData['weight']=_patientInfoController.weightController.value.text;
-                          profileData['height']=_patientInfoController.heightController.value.text;
+                          profileData['age']=_patientInfoController.ageController.value.text;
+                          profileData['email']=_patientInfoController.emailController.value.text;
+
                           (await SharedPref.getStringPreference(SharedPref.MOBILE)).logD;
                           storeData(await SharedPref.getStringPreference(SharedPref.MOBILE), profileData);                        //  context.go('/PatientProfileScreen');
                         retrieveData(await SharedPref.getStringPreference(SharedPref.MOBILE)).then((value){

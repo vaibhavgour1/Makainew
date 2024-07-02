@@ -30,7 +30,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(0),
+            padding: const EdgeInsets.all(0),
             child: Column(
               // mainAxisAlignment: MainAxisAlignment.start,
               // crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,9 +97,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       itemBuilder: (BuildContext context, int index) {
                         var bankData = notificationList[index];
                         return Container(
-                          margin: EdgeInsets.symmetric(vertical: 5.0),
+                          margin: const EdgeInsets.symmetric(vertical: 5.0),
                           child: ListTile(
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 16.0), // Adjusted content padding
                             leading: ClipRRect(
                               borderRadius: BorderRadius.circular(20),

@@ -58,6 +58,22 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
       children: [
         Scaffold(
           backgroundColor: Colors.white,
+          appBar: AppBar(
+            leading:  GestureDetector(
+                onTap: () {
+                  context.go('/PatientProfileScreen');
+                },
+                child: const Icon(Icons.arrow_back,
+                    color: AppColor.appbarBgColor)),
+            centerTitle: true,
+            title: Text(
+              'Drugs',
+              style: textSemiBold.copyWith(
+                  color: AppColor.black, fontSize: AppSize.sp22),
+              overflow: TextOverflow.ellipsis,
+            ),
+
+          ),
           body: SafeArea(
             child: SingleChildScrollView(
               child: Padding(
@@ -67,24 +83,7 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // SpaceV(AppSize.h40),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        GestureDetector(
-                            onTap: () {
-                              context.go('/PatientProfileScreen');
-                            },
-                            child: const Icon(Icons.arrow_back,
-                                color: AppColor.appbarBgColor)),
-                        SpaceH(AppSize.w40),
-                        Text(
-                          medicalCondition,
-                          style: textSemiBold.copyWith(
-                              color: AppColor.black, fontSize: AppSize.sp22),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
+
                     // SpaceV(AppSize.h20),
                     // if (!showMyMediacience)
                     //   Column(
@@ -399,32 +398,34 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
               submitButton,
               () async {
                 addmymedicalCondition.toString().logD;
-                //  List<String> valuesList = [];
-                //
-                // // Using forEach()
-                // for (var map in addmymedicalCondition) {
-                // for (var value in map.values) {
-                // valuesList.add(value);
-                // }
-                // }
-
-                // Using map() and expand()
                 List<String> valuesList = addmymedicalCondition
                     .map((map) => map.values)
                     .expand((values) => values)
                     .toList();
+
                 DateTime now = DateTime.now();
                 String timestamp = now.microsecondsSinceEpoch.toString();
-                 // Output: [value1, value2, value3, value4, value5, value6]
+
                 setState(() {
                   showMyMediacience = false;
                 });
+
                 (await SharedPref.getStringPreference(SharedPref.MOBILE)).logD;
-                medicineData['Name'] = valuesList.toString();
-                medicineData['Frequency'] = frequencyList.toString();
-                medicineData['Dosage'] = dosageList.toString();
-                medicineData['MedicineId'] =  timestamp;
+
+
+
+// Convert lists to comma-separated strings
+                String frequencyStr = frequencyList.join(", ");
+                String dosageStr = dosageList.join(", ");
+                String nameStr = valuesList.join(",");
+
+                medicineData['Name'] = nameStr;
+                medicineData['Frequency'] = frequencyStr;
+                medicineData['Dosage'] = dosageStr;
+// The medicineData map should now be formatted correctly
+                medicineData['MedicineId'] =  "$timestamp";
                 medicineData.logD;
+
                 storeData(
                     await SharedPref.getStringPreference(SharedPref.MOBILE),
                     medicineData);

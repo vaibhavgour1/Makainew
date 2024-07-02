@@ -21,7 +21,7 @@ class _MedicationScreenState extends State<MedicationScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   List<String> nameList = [];
-
+  List<Map<String, String>> medicines = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -29,61 +29,38 @@ class _MedicationScreenState extends State<MedicationScreen> {
     retrieveDa();
   }
 
-  retrieveDa() async {
-    String mobileNumber =
-        await SharedPref.getStringPreference(SharedPref.MOBILE);
+  Future<void> retrieveDa() async {
+    String mobileNumber = await SharedPref.getStringPreference(SharedPref.MOBILE);
+    ('mobileNumber => $mobileNumber').logD;
 
     retrieveData(mobileNumber, 'medicine').then((value) async {
-      // Check if value is empty
+      ('mobileNumber => $mobileNumber').logD;
+
       if (value == null || value.isEmpty) {
-        Utility.showToast(
-            msg: 'Please Fill Medicine Name Dosage From Profile Tab');
+        Utility.showToast(msg: 'Please Fill Medicine Name Dosage From Profile Tab');
         return;
       }
 
-      List<String> extractAndOrganizeIndexData(Map<String, dynamic> data) {
-        // Reverse the order of keys in the map
-        List<String> reversedKeys = data.keys.toList().reversed.toList();
-
-        // Initialize a list of lists to hold extracted values
-        List<List<String>> tempResult = [];
-
-        for (String key in reversedKeys) {
-          // Get the value for the current key
-          dynamic value = data[key];
-
-          // Check if the value is in list format
-          if (value is String && value.startsWith('[') && value.endsWith(']')) {
-            // Remove the brackets and split the string by ', '
-            List<String> parsedList =
-                value.substring(1, value.length - 1).split(', ');
-
-            // Populate the tempResult list
-            for (int i = 0; i < parsedList.length; i++) {
-              // Ensure tempResult has enough inner lists
-              if (tempResult.length <= i) {
-                tempResult.add([]);
-              }
-              // Add the element to the appropriate inner list
-              tempResult[i].add(parsedList[i]);
-            }
-          }
-        }
-
-        // Combine the lists into single strings
-        List<String> result =
-            tempResult.map((innerList) => innerList.join(', ')).toList();
-
-        return result;
-      }
-
       setState(() {
-        nameList = extractAndOrganizeIndexData(value);
-        // Print the result
-        (nameList).logD;
+        medicines = parseMedicineData(value);
+        ('medicines => $medicines').logD;
       });
-      // Extracting and organizing the data
     });
+  }
+  List<Map<String, String>> parseMedicineData(Map<String, dynamic> data) {
+    List<String> names = data['Name'].split(',');
+    List<String> dosages = data['Dosage'].split(',');
+    List<String> frequencies = data['Frequency'].split(',');
+
+    List<Map<String, String>> medicines = [];
+    for (int i = 0; i < names.length; i++) {
+      medicines.add({
+        'name': names[i].trim(),
+        'dosage': dosages[i].trim(),
+        'frequency': frequencies[i].trim(),
+      });
+    }
+    return medicines;
   }
 
   @override
@@ -193,9 +170,9 @@ class _MedicationScreenState extends State<MedicationScreen> {
                             SizedBox(
                               width: AppSize.w14,
                             ),
-                            SvgPicture.asset(
-                              'assets/images/svgs/edit-line.svg',
-                            ),
+                            // SvgPicture.asset(
+                            //   'assets/images/svgs/edit-line.svg',
+                            // ),
                           ],
                         ),
                         // Text(
@@ -210,61 +187,19 @@ class _MedicationScreenState extends State<MedicationScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
-               //   color: AppColor.bordercolor,
-                 height: MediaQuery.of(context).size.height * (0.08*nameList.length),
-                  child: ListView.builder(
-                    itemCount: nameList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 3, right: 3),
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  left: BorderSide(
-                                    color: AppColor.rediousfillcolot,
-                                    width: 1,
-                                  ),
-                                  right: BorderSide(
-                                    color: AppColor.rediousfillcolot,
-                                    width: 1,
-                                  ),
-                                  bottom: BorderSide(
-                                    color: AppColor.rediousfillcolot,
-                                    width: 1,
-                                  ),
-                                ),
-                              ),
-                              child: ListTile(
-
-                                leading: Text(
-                                  (index + 1).toString(),
-                                  // Display index starting from 1
-                                  style: textMedium.copyWith(
-                                    fontSize: AppSize.sp14,
-                                    color: AppColor.black,
-                                  ),
-                                ),
-                                title: Text(
-                                  nameList[index] ?? "",
-                                  style: textMedium.copyWith(
-                                    fontSize: AppSize.sp14,
-                                    color: AppColor.black,
-                                  ),
-                                ),
-                                onTap: () {
-                                  // Handle onTap event
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: ListView.builder(
+              itemCount: medicines.length,
+              itemBuilder: (BuildContext context, int index) {
+                final medicine = medicines[index];
+                return MedicineItem(
+                  name: medicine['name']!,
+                  dosage: medicine['dosage']!,
+                  frequency: medicine['frequency']!,
+                );
+              },
+            ),),
                 SpaceV(AppSize.h26),
                 // Container(
                 //   decoration: BoxDecoration(
@@ -365,6 +300,37 @@ class _MedicationScreenState extends State<MedicationScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+class MedicineItem extends StatelessWidget {
+  final String name;
+  final String dosage;
+  final String frequency;
+
+  const MedicineItem({
+    Key? key,
+    required this.name,
+    required this.dosage,
+    required this.frequency,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColor.rediousfillcolot),
+      ),
+      padding: const EdgeInsets.all(8.0),
+      margin: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Name: $name', style: textMedium.copyWith(fontSize: AppSize.sp14, color: AppColor.black)),
+          Text('Dosage: $dosage', style: textMedium.copyWith(fontSize: AppSize.sp14, color: AppColor.black)),
+          Text('Frequency: $frequency', style: textMedium.copyWith(fontSize: AppSize.sp14, color: AppColor.black)),
+        ],
       ),
     );
   }

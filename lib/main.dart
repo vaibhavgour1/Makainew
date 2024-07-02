@@ -10,7 +10,7 @@ import 'package:makaihealth/extensions/constants.dart';
 import 'package:makaihealth/utility/dependency_injection.dart';
 import 'package:makaihealth/utility/logger.dart';
 import 'package:makaihealth/utility/theme.dart';
-
+import 'package:kommunicate_flutter/kommunicate_flutter.dart';
 
 import 'routes/app_router.dart';
 import 'utility/app_initializer.dart';
@@ -51,9 +51,9 @@ void main() async {
 
     ("Failed to initialize Firebase: $e").logD;
   }
-  DependencyInjection().initialise(Injector());
-  injector = Injector();
-  await AppInitializer().initialise(injector!);
+  //DependencyInjection().initialise(Injector());
+  // injector = Injector();
+  // await AppInitializer().initialise(injector!);
 // Ideal time to initialize
   //await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
   runApp(const MyApp());

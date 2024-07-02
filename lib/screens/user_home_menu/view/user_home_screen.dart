@@ -5,13 +5,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:makaihealth/api/retriveData.dart';
+import 'package:makaihealth/screens/spalsh/view/splash_screen.dart';
 import 'package:makaihealth/screens/user_home_menu/Controller/user_homemenu_controller.dart.dart';
 import 'package:makaihealth/utility/colors.dart';
 import 'package:makaihealth/utility/dimension.dart';
 import 'package:makaihealth/utility/sharedpref.dart';
 import 'package:makaihealth/utility/text_styles.dart';
 import 'package:makaihealth/utility/utility.dart';
-import 'package:makaihealth/widget/space_horizontal.dart';
 import 'package:makaihealth/widget/space_vertical.dart';
 
 class UserProfileHomeScreen extends StatefulWidget {
@@ -386,6 +386,12 @@ setState(() {
                 ],
               ),
               onTap: () {
+                SharedPref.clearSharedPreference(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const SplashScreen()));
                 // Update the UI based on drawer item click
               },
             ),

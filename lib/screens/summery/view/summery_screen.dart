@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:makaihealth/gen/assets.gen.dart';
+import 'package:makaihealth/main.dart';
+import 'package:makaihealth/screens/summery/response/summery-response.dart';
 import 'package:makaihealth/utility/colors.dart';
 import 'package:makaihealth/utility/dimension.dart';
 import 'package:makaihealth/utility/string_constants.dart';
 import 'package:makaihealth/utility/text_styles.dart';
 import 'package:makaihealth/widget/space_horizontal.dart';
-import 'package:makaihealth/widget/space_vertical.dart';
-import 'package:pie_chart/pie_chart.dart';
+import 'package:dio/dio.dart';
+import 'dart:developer';
+// Update the import as per your project structure
 
 class SummeryScreen extends StatefulWidget {
   const SummeryScreen({super.key});
@@ -18,18 +21,15 @@ class SummeryScreen extends StatefulWidget {
 
 class _SummeryScreenState extends State<SummeryScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  Future<EvaluationsResponse> futureSummary = apiProvider.getSummery();
 
-  Map<String, double> dataMap = {
-    "Flutter": 5,
-    "React": 3,
-    "Xamarin": 2,
-    "Ionic": 2,
-  };
-
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.white,
@@ -49,8 +49,8 @@ class _SummeryScreenState extends State<SummeryScreen> {
                           onTap: () {
                             context.go('/UserProfileHomeScreen');
                           },
-                          child: const Icon(Icons.arrow_back,color: AppColor.appbarBgColor)
-                      ),
+                          child: const Icon(Icons.arrow_back,
+                              color: AppColor.appbarBgColor)),
                       Expanded(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -73,47 +73,63 @@ class _SummeryScreenState extends State<SummeryScreen> {
                     ],
                   ),
                 ),
-                SpaceV(AppSize.h20),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Text(
-                    medicationsEffects,
-                    style: textMedium.copyWith(
-                      color: AppColor.black,
-                      fontSize: AppSize.sp16,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                FutureBuilder<EvaluationsResponse>(
+                  future: futureSummary,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    } else if (snapshot.hasData) {
+                      final summaries = snapshot.data!.data;
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: summaries!.length,
+                        itemBuilder: (context, index) {
+                          final summary = summaries[index];
+                          return ExpansionTile(
+                            title: Text(
+                              'Summary ID: ${summary.llmEvaluationId}',
+                              style: textBold.copyWith(color: AppColor.black),
+                            ),
+                            children: [
+                              ListTile(
+                                title: Text(
+                                  'Patient Name: ${summary.patientId}',
+                                  style:
+                                      textBold.copyWith(color: AppColor.black),
+                                ),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Date: ${summary.date}',
+                                      style: textBold.copyWith(
+                                          color: AppColor.black),
+                                    ),
+                                    Text(
+                                      'Evaluation: ${summary.evaluation}',
+                                      style: textSemiBold.copyWith(
+                                          color: AppColor.black,fontSize: AppSize.sp14),
+                                    ),
+                                    // Add other fields as needed
+                                  ],
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    } else {
+                      return Center(
+                          child: Text(
+                        'No data available',
+                        style: textBold.copyWith(color: AppColor.black),
+                      ));
+                    }
+                  },
                 ),
-                SpaceV(AppSize.h40),
-                Container(
-                  height: AppSize.h200,
-
-                  child: PieChart(dataMap: dataMap,
-                    legendOptions: LegendOptions(
-                      showLegendsInRow: false,
-                      showLegends: false,
-                    ),
-                    chartValuesOptions: ChartValuesOptions(
-                      showChartValues: false,
-                    ),
-                  ),
-                ),
-
-                SpaceV(AppSize.h40),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Text(
-                    progressAfterMedications,
-                    style: textMedium.copyWith(
-                      color: AppColor.black,
-                      fontSize: AppSize.sp16,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-
-
               ],
             ),
           ),
@@ -122,4 +138,3 @@ class _SummeryScreenState extends State<SummeryScreen> {
     );
   }
 }
-

@@ -23,16 +23,24 @@ class LoginSignupScreen extends StatelessWidget {
                 children: [
               Assets.images.svgs.makaiLogo.svg(
                   height: context.height * 0.20, width: context.height * 0.20),
-              SpaceV(AppSize.h40),
               Text(
-                'Monitor your healthy',
+                'MAKAI',
+                style: textSemiBold.copyWith(
+                    color: AppColor.black, fontSize: AppSize.sp28),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              SpaceV(AppSize.h20),
+              Text(
+                'Monitor your Health',
                 style: textSemiBold.copyWith(
                     color: AppColor.black, fontSize: AppSize.sp32),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-                  Assets.json.womenDoingYoga.lottie(),
-             // SpaceV(context.height * 0.10),
+
+              Assets.json.womenDoingYoga.lottie(),
+              // SpaceV(context.height * 0.10),
               AppButton(
                 "Sign with number",
                 () {

@@ -1,14 +1,17 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:go_router/go_router.dart';
+import 'package:makaihealth/api/retriveData.dart';
 import 'package:makaihealth/gen/assets.gen.dart';
 import 'package:makaihealth/utility/colors.dart';
 import 'package:makaihealth/utility/config.dart';
 import 'package:makaihealth/utility/dimension.dart';
+import 'package:makaihealth/utility/logger.dart';
 import 'package:makaihealth/utility/sharedpref.dart';
 import 'package:makaihealth/utility/text_styles.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -83,27 +86,32 @@ class _SplashScreenState extends State<SplashScreen> {
     // });
     // SocketService().connect();
     // SocketService().sendMessage("text", "data");
-login();
+    login();
   }
-login() async {
-  if(await SharedPref.getBooleanPreference(SharedPref.LOGIN)) {
-    Timer(
-      const Duration(seconds: 3),
-          () => context.go('/PatientInfoFormScreen'),
-    );
-  }else{
-    Timer(
-      const Duration(seconds: 3),
-          () => context.go('/OnboardingPage'),
-    );
+
+  login() async {
+    if (await SharedPref.getBooleanPreference(SharedPref.LOGIN)) {
+      retrieveData(await SharedPref.getStringPreference(SharedPref.MOBILE))
+          .then((value) {
+        if (value != null) {
+          Timer(
+            const Duration(milliseconds: 3),
+            () => context.go('/HomeView'),
+          );
+        } else {
+          Timer(
+            const Duration(seconds: 3),
+            () => context.go('/PatientInfoFormScreen'),
+          );
+        }
+      });
+    } else {
+      Timer(
+        const Duration(seconds: 3),
+        () => context.go('/OnboardingPage'),
+      );
+    }
   }
-}
-  // Future<void> socketConnection() async {
-  //   log('socketConnection 00');
-  //   // if (_homeController.userProfileModel.value.data?.profile?.id?.isNotEmpty ?? false) {
-  //
-  //   SocketService.createSocketConnection();
-  // }
 
   @override
   void dispose() {
@@ -118,23 +126,24 @@ login() async {
       child: Stack(children: [
         Align(
             alignment: Alignment.topLeft,
-            child: Assets.images.svgs.capsul.svg(height:context.height*0.25 )),
+            child:
+                Assets.images.svgs.capsul.svg(height: context.height * 0.25)),
         Padding(
-          padding:  EdgeInsets.only(bottom: context.height*0.12,left: context.width*0.12),
+          padding: EdgeInsets.only(
+              bottom: context.height * 0.12, left: context.width * 0.12),
           child: Align(
             alignment: Alignment.center,
-              child:  Assets.images.svgs.doctor.svg(
-                  height: context.height * 0.35,
-
-
-              ),
+            child: Assets.images.svgs.doctor.svg(
+              height: context.height * 0.35,
+            ),
           ),
         ),
         Padding(
-          padding:  EdgeInsets.only(bottom: AppSize.h20),
+          padding: EdgeInsets.only(bottom: AppSize.h20),
           child: Align(
               alignment: Alignment.bottomRight,
-              child: Assets.images.svgs.vector.svg(height:context.height*0.25 )),
+              child:
+                  Assets.images.svgs.vector.svg(height: context.height * 0.25)),
         ),
         Center(
           child: Column(
@@ -155,5 +164,24 @@ login() async {
         ),
       ]),
     ));
+  }
+
+  Future<Map<String, dynamic>?> retrieveData(String mobileNumber) async {
+    try {
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance
+          .collection('usersProfile')
+          .doc(mobileNumber)
+          .get();
+      if (snapshot.exists) {
+
+        return snapshot.data() as Map<String, dynamic>;
+      } else {
+        ('No data found for mobile number: $mobileNumber').logD;
+        return null;
+      }
+    } catch (e) {
+      ('Error retrieving data: $e').logD;
+      return null;
+    }
   }
 }

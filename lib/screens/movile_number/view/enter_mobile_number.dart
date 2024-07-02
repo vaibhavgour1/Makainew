@@ -180,48 +180,92 @@ bool check=false;
                   AppButton(
                     continueButton,
                         () async {
-                     if(phoneNumber.isNotEmpty&&phoneNumber.length>=9) {
-                       if(check) {
-                         await FirebaseAuth.instance.verifyPhoneNumber(
-                           phoneNumber: countryController.text + phoneNumber,
-                           verificationCompleted:
-                               (PhoneAuthCredential credential) async {
-                             // ANDROID ONLY!
-
-                             // Sign the user in (or link) with the auto-generated credential
-                             // await auth.signInWithCredential(credential);
-                           },
-                           verificationFailed: (FirebaseAuthException e) {
-                             if (e.code == 'invalid-phone-number') {
-                               Utility.showToast(
-                                   msg: 'The provided phone number is not valid.');
-                             }
-
-                             // Handle other errors
-                           },
-                           codeSent: (String verificationId, int? resendToken) {
-                             Navigator.push(
-                                 context,
-                                 MaterialPageRoute(
-                                     builder: (context) =>
-                                         VerifyOtpScreen(
-                                           verify: verificationId,
-                                           mobile: phoneNumber,
-                                         )));
-                             // context.goNamed(
-                             //   'VerifyOtpScreen?verify=$verificationId',
-                             // );
-                           },
-                           codeAutoRetrievalTimeout: (String verificationId) {},
-                         );
-                       }else{
-                         Utility.showToast(
-                             msg: 'Please Select checkbox');
-                       }
-                     }else{
-                       Utility.showToast(
-                           msg: 'Please fill 10 digit mobile number');
-                     }
+                          if (phoneNumber.isNotEmpty && phoneNumber.length >= 9) {
+                            if (check) {
+                              try {
+                                await FirebaseAuth.instance.verifyPhoneNumber(
+                                  phoneNumber: countryController.text + phoneNumber,
+                                  verificationCompleted: (PhoneAuthCredential credential) async {
+                                    // ANDROID ONLY!
+                                    // Sign the user in (or link) with the auto-generated credential
+                                    // await auth.signInWithCredential(credential);
+                                  },
+                                  verificationFailed: (FirebaseAuthException e) {
+                                    if (e.code == 'invalid-phone-number') {
+                                      Utility.showToast(msg: 'The provided phone number is not valid.');
+                                    } else if (e.code == 'quota-exceeded') {
+                                      Utility.showToast(msg: 'Quota exceeded. Please try again later.');
+                                    } else {
+                                      Utility.showToast(msg: 'Some error occurred: ${e.message}');
+                                    }
+                                  },
+                                  codeSent: (String verificationId, int? resendToken) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => VerifyOtpScreen(
+                                          verify: verificationId,
+                                          mobile: phoneNumber,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  codeAutoRetrievalTimeout: (String verificationId) {},
+                                );
+                              } catch (e) {
+                                Utility.showToast(msg: 'An unexpected error occurred: $e');
+                              }
+                            } else {
+                              Utility.showToast(msg: 'Please select the checkbox');
+                            }
+                          } else {
+                            Utility.showToast(msg: 'Please fill in a valid mobile number');
+                          }
+                     // if(phoneNumber.isNotEmpty&&phoneNumber.length>=9) {
+                     //   if(check) {
+                     //     phoneNumber.logD;
+                     //     await FirebaseAuth.instance.verifyPhoneNumber(
+                     //       phoneNumber: countryController.text + phoneNumber,
+                     //       verificationCompleted:
+                     //           (PhoneAuthCredential credential) async {
+                     //         // ANDROID ONLY!
+                     //
+                     //         // Sign the user in (or link) with the auto-generated credential
+                     //         // await auth.signInWithCredential(credential);
+                     //       },
+                     //       verificationFailed: (FirebaseAuthException e) {
+                     //         if (e.code == 'invalid-phone-number') {
+                     //           Utility.showToast(
+                     //               msg: 'The provided phone number is not valid.');
+                     //         }
+                     //         '====>$e'.logD;
+                     //         Utility.showToast(
+                     //             msg: 'Some error occurred');
+                     //         // Handle other errors
+                     //       },
+                     //       codeSent: (String verificationId, int? resendToken) {
+                     //         Navigator.push(
+                     //             context,
+                     //             MaterialPageRoute(
+                     //                 builder: (context) =>
+                     //                     VerifyOtpScreen(
+                     //                       verify: verificationId,
+                     //                       mobile: phoneNumber,
+                     //                     )));
+                     //         // context.goNamed(
+                     //         //   'VerifyOtpScreen?verify=$verificationId',
+                     //         // );
+                     //       },
+                     //       codeAutoRetrievalTimeout: (String verificationId) {},
+                     //     );
+                     //   }else{
+                     //     Utility.showToast(
+                     //         msg: 'Please Select checkbox');
+                     //   }
+                     // }else{
+                     //   Utility.showToast(
+                     //       msg: 'Please fill 10 digit mobile number');
+                     // }
                     },
                     isDisabled: false,
                   ),

@@ -47,6 +47,7 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Header
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -71,12 +72,13 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                       ],
                     ),
                     SpaceV(AppSize.h40),
+
+                    // My Conditions List
                     if (showMyCondition)
                       SizedBox(
-                        height: (MediaQuery.of(context).size.width * 0.40),
+                        height: MediaQuery.of(context).size.width * 0.40,
                         child: ListView.builder(
                           shrinkWrap: true,
-
                           padding: EdgeInsets.zero,
                           itemCount: addmymedicalCondition.length,
                           itemBuilder: (BuildContext context, int index) {
@@ -84,8 +86,7 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                             return ListTile(
                               tileColor:
                               AppColor.chatBlueBgColor.withOpacity(.3),
-                              leading:
-                              Assets.images.svgs.medicalconditionMyconImg
+                              leading: Assets.images.svgs.medicalconditionMyconImg
                                   .svg(),
                               iconColor: AppColor.black,
                               title: Text(
@@ -100,6 +101,7 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                           },
                         ),
                       ),
+                    // Add Condition Section
                     Center(
                       child: Text(
                         addCondition,
@@ -161,10 +163,13 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                         },
                         isDisabled: false,
                       ),
+                    SpaceV(AppSize.h20),
+
+                    // Past Disease Section
                     if (pastDisease.isNotEmpty)
                       ListTile(
-                        leading:
-                        Assets.images.svgs.medicalconditionMyconImg.svg(),
+                        leading: Assets.images.svgs.medicalconditionMyconImg
+                            .svg(),
                         iconColor: AppColor.black,
                         title: Text(
                           pastDisease,
@@ -219,17 +224,19 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                         addCondition,
                             () {
                           setState(() {
-                            showPastDisease = true;
                             pastDiseaseController.clear();
                             showPastDisease = false;
                           });
                         },
                         isDisabled: false,
                       ),
+                    SpaceV(AppSize.h20),
+
+                    // Past Surgery Section
                     if (pastSurgery.isNotEmpty)
                       ListTile(
-                        leading:
-                        Assets.images.svgs.medicalconditionMyconImg.svg(),
+                        leading: Assets.images.svgs.medicalconditionMyconImg
+                            .svg(),
                         iconColor: AppColor.black,
                         title: Text(
                           pastSurgery,
@@ -284,7 +291,6 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
                         addCondition,
                             () {
                           setState(() {
-                            showPastSurgery = true;
                             pastSurgeryController.clear();
                             showPastSurgery = false;
                           });
@@ -298,6 +304,7 @@ class _MedicalConditionScreenState extends State<MedicalConditionScreen> {
             ),
           ),
         ),
+        // Submit Button
         Positioned(
           bottom: MediaQuery.of(context).size.height * 0.02,
           left: MediaQuery.of(context).size.width * 0.07,

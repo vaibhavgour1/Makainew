@@ -12,6 +12,9 @@ class PatientInfoController extends GetxController {
   final weightController = TextEditingController().obs;
   final heightController = TextEditingController().obs;
 
+  final ageController = TextEditingController().obs;
+  final emailController = TextEditingController().obs;
+
 
 
 
